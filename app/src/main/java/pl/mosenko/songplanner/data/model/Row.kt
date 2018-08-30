@@ -31,7 +31,7 @@ const val ORDINAL_COLUMN = "ordinal"
                 onUpdate = ForeignKey.CASCADE
         )
         ])
-data class Row(@PrimaryKey(autoGenerate = true) var rowId: Long,
+data class Row(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var rowId: Long,
                @ColumnInfo(name = SONGBOOK_SONG_ID_COLUMN) var songbookSongId: Long,
                @ColumnInfo(name = PART_OF_MASS_ID_COLUMN) var partOfMassId: Long,
                @ColumnInfo(name = SET_OF_SONGS_ID_COLUMN) var setOfSongsId: Long,

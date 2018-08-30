@@ -30,7 +30,7 @@ const val NUMBER_IN_SONGBOOK_COLUMN = "number_in_songbook"
                 onUpdate = ForeignKey.CASCADE
         )
         ])
-data class SongbookSong(@PrimaryKey(autoGenerate = true) var songbookSongId: Long,
+data class SongbookSong(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var songbookSongId: Long,
                         @ColumnInfo(name = NUMBER_IN_SONGBOOK_COLUMN) var numberInSongbook: String,
                         @ColumnInfo(name = SONG_ID_COLUMN) var songId: Long,
                         @ColumnInfo(name = SONGBOOK_ID_COLUMN) var songbookId: Long,

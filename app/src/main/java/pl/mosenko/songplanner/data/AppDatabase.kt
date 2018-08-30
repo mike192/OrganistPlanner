@@ -3,7 +3,7 @@ package pl.mosenko.songplanner.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import pl.mosenko.songplanner.data.dao.SetOfSongsDao
+import pl.mosenko.songplanner.data.dao.*
 import pl.mosenko.songplanner.data.model.*
 import pl.mosenko.songplanner.utils.DateTypeConverter
 
@@ -21,5 +21,11 @@ const val DB_VERSION = 1
         SongbookSong::class), version = DB_VERSION)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun getPartOfMassDao(): PartOfMassDao
+    abstract fun getRowDao(): RowDao
     abstract fun getSetOfSongsDao(): SetOfSongsDao
+    abstract fun getSlideDao(): SlideDao
+    abstract fun getSongbookDao(): SongbookDao
+    abstract fun getSongbookSongDao(): SongbookSongDao
+    abstract fun getSongDao(): SongDao
 }

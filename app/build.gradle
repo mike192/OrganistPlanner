@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -39,7 +38,15 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxJavaVersion"
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    //Koin
+    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "org.koin:koin-core:$rootProject.koinVersion"
+    implementation "org.koin:koin-android-scope:$rootProject.koinVersion"
+    implementation "org.koin:koin-android-viewmodel:$rootProject.koinVersion"
+    testImplementation "org.koin:koin-test:$rootProject.koinVersion"
+    androidTestImplementation "org.koin:koin-test:$rootProject.koinVersion"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
     implementation 'androidx.appcompat:appcompat:1.0.0-rc02'
     implementation 'com.google.android.material:material:1.0.0-rc01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'

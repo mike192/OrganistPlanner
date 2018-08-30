@@ -3,6 +3,7 @@ package pl.mosenko.songplanner.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import pl.mosenko.songplanner.data.COLUMN_ID
 import java.util.*
 
 const val SET_OF_SONGS_TABLE = "set_of_songs"
@@ -13,7 +14,7 @@ const val AUTHOR_COLUMN = "author"
 const val PLACE_COLUMN = "place"
 
 @Entity(tableName = SET_OF_SONGS_TABLE)
-data class SetOfSongs(@PrimaryKey(autoGenerate = true) var setOfSongsId: Long,
+data class SetOfSongs(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var setOfSongsId: Long,
                       @ColumnInfo(name = SET_OF_SONGS_NAME_COLUMN) var setOfSongsName: String,
                       @ColumnInfo(name = LITURGICAL_YEAR_COLUMN) var liturgicalYear: String,
                       @ColumnInfo(name = CREATED_DATE_COLUMN) var createdDate: Date,
