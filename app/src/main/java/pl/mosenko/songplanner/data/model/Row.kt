@@ -1,9 +1,6 @@
 package pl.mosenko.songplanner.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import pl.mosenko.songplanner.data.COLUMN_ID
 
 const val ROW_TABLE = "row"
@@ -30,7 +27,8 @@ const val ORDINAL_COLUMN = "ordinal"
                 onDelete = ForeignKey.SET_NULL,
                 onUpdate = ForeignKey.CASCADE
         )
-        ])
+        ],
+        indices = [Index(SONGBOOK_SONG_ID_COLUMN), Index(PART_OF_MASS_ID_COLUMN), Index(SET_OF_SONGS_ID_COLUMN)])
 data class Row(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var rowId: Long,
                @ColumnInfo(name = SONGBOOK_SONG_ID_COLUMN) var songbookSongId: Long,
                @ColumnInfo(name = PART_OF_MASS_ID_COLUMN) var partOfMassId: Long,

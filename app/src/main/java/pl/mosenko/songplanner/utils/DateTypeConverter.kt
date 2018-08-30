@@ -1,10 +1,9 @@
 package pl.mosenko.songplanner.utils
 
-import java.util.Date
-
 import androidx.room.TypeConverter
+import java.util.*
 
-object DateTypeConverter {
+class DateTypeConverter {
 
     @TypeConverter
     fun fromDate(date: Date?): Long? {

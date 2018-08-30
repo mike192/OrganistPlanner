@@ -1,9 +1,6 @@
 package pl.mosenko.songplanner.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import pl.mosenko.songplanner.data.COLUMN_ID
 
 const val SONGBOOK_SONG_TABLE = "songbook_song"
@@ -29,8 +26,8 @@ const val NUMBER_IN_SONGBOOK_COLUMN = "number_in_songbook"
                 onDelete = ForeignKey.SET_NULL,
                 onUpdate = ForeignKey.CASCADE
         )
-        ])
-data class SongbookSong(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var songbookSongId: Long,
+        ], indices = [Index(SONG_ID_COLUMN), Index(SONGBOOK_ID_COLUMN), Index(SLIDE_ID_COLUMN)])
+data class SongbookSong(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) var songbookSongId: Long,
                         @ColumnInfo(name = NUMBER_IN_SONGBOOK_COLUMN) var numberInSongbook: String,
                         @ColumnInfo(name = SONG_ID_COLUMN) var songId: Long,
                         @ColumnInfo(name = SONGBOOK_ID_COLUMN) var songbookId: Long,

@@ -1,9 +1,6 @@
 package pl.mosenko.songplanner.data.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import io.reactivex.Maybe
 import pl.mosenko.songplanner.data.COLUMN_ID
 import pl.mosenko.songplanner.data.model.CREATED_DATE_COLUMN
@@ -16,6 +13,7 @@ interface SetOfSongsDao : BaseDao<SetOfSongs>{
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE")
     fun getSetSetOfSongs(): Maybe<List<SetOfSongs>>
 
+    @Transaction
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE where $CREATED_DATE_COLUMN >= datetime()")
     fun getPlannedSetSetOfSongs(): Maybe<List<PlannedSetOfSongs>>
 
