@@ -9,7 +9,7 @@ import org.koin.dsl.module.module
 class BaseApplication : Application() {
 
     private val baseModule = module {
-        single(createOnStart = true) {
+        single {
             Room.databaseBuilder(androidContext(),
                     AppDatabase::class.java, DB_NAME)
                     .build()
