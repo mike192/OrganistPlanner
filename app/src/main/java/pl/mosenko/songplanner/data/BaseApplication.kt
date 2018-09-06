@@ -17,7 +17,6 @@ class BaseApplication : Application() {
         single { get<AppDatabase>().getPartOfMassDao() }
         single { get<AppDatabase>().getRowDao() }
         single { get<AppDatabase>().getSetOfSongsDao() }
-        single { get<AppDatabase>().getSlideDao() }
         single { get<AppDatabase>().getSongDao() }
         single { get<AppDatabase>().getSongbookDao() }
         single { get<AppDatabase>().getSongbookSongDao() }
