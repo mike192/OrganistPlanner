@@ -1,4 +1,4 @@
-package pl.mosenko.songplanner.utilities
+package pl.mosenko.songplanner.test.utilities
 
 import androidx.lifecycle.LiveData
 import java.util.concurrent.CountDownLatch

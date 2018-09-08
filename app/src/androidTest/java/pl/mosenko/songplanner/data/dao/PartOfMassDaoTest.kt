@@ -9,13 +9,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.standalone.inject
 import pl.mosenko.songplanner.data.model.PartOfMass
-import pl.mosenko.songplanner.utilities.getBlockingValue
+import pl.mosenko.songplanner.test.utilities.getBlockingValue
 
 
 @RunWith(AndroidJUnit4::class)
-class PartOfMassDaoTest : DaoTest() {
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+class PartOfMassDaoTest : DbTest() {
 
     val partOfMassDao: PartOfMassDao by inject()
 

@@ -1,0 +1,22 @@
+[
+  {
+    "partOfMassId":1,
+    "partOfMass:"Wejście"
+  },
+  {
+    "partOfMassId":2,
+    "partOfMassName":"Przygotowanie darów"
+  },
+  {
+    "partOfMassId":3,
+    "partOfMassName":"Komunia"
+  },
+  {
+    "partOfMassId":4,
+    "partOfMassName":"Uwielbienie"
+  },
+  {
+    "partOfMassId":5,
+    "partOfMassName":"Rozesłanie"
+  }
+]

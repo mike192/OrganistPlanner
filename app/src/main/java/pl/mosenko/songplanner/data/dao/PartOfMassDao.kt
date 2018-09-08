@@ -18,4 +18,7 @@ interface PartOfMassDao : BaseDao<PartOfMass> {
 
     @Query("select * from $PART_OF_MASS_TABLE where $COLUMN_ID = :partOfMassId")
     fun getPartOfMassById(partOfMassId: Long): LiveData<PartOfMass>
+
+    @Insert
+    fun insertAll(partOfMasses: List<PartOfMass>): List<Long>
 }
