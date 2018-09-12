@@ -19,14 +19,14 @@ class GsonExtKtTest {
     @Test
     fun fromJsonFile_shouldReturnListOfPartMasses_WhenCorrectArgumentsGiven() {
         val appContext = InstrumentationRegistry.getContext()
-        val partOfMassListSource = listOf(
-                PartOfMass(1, "Wejście")
-                , PartOfMass(2, "Przygotowanie darów")
-                , PartOfMass(3, "Komunia")
-                , PartOfMass(4, "Uwielbienie")
-                , PartOfMass(5, "Rozesłanie"))
+        val partOfMassListSource = TestDataGenerator.createPartOfMassList()
         val partOfMassList = Gson().fromJsonFile<List<PartOfMass>>(appContext, PART_OF_MASSES_FILE_NAME)
         assertThat(partOfMassListSource.size, `is`(partOfMassList.size))
+        assertThat(partOfMassListSource[0], `is`(partOfMassList[0]))
+        assertThat(partOfMassListSource[1], `is`(partOfMassList[1]))
+        assertThat(partOfMassListSource[2], `is`(partOfMassList[2]))
+        assertThat(partOfMassListSource[3], `is`(partOfMassList[3]))
+        assertThat(partOfMassListSource[4], `is`(partOfMassList[4]))
     }
 
     @Test(expected = FileNotFoundException::class)

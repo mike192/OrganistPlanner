@@ -1,15 +1,13 @@
 package pl.mosenko.songplanner.data.dao
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.runner.AndroidJUnit4
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.standalone.inject
-import pl.mosenko.songplanner.data.model.PartOfMass
 import pl.mosenko.songplanner.test.utilities.getBlockingValue
+import pl.mosenko.songplanner.utils.TestDataGenerator.createFakePartOfMass
 
 
 @RunWith(AndroidJUnit4::class)
@@ -19,17 +17,15 @@ class PartOfMassDaoTest : DbTest() {
 
     @Test
     fun insert_ShouldPersistGivenData() {
-        val partOfMass = provideFakePartOfMass()
+        val partOfMass = createFakePartOfMass()
         val partOfMassId = partOfMassDao.insert(partOfMass)
         assertThat(partOfMassId, `is`(1L))
         assertThat(partOfMassDao.getPartOfMassById(1).getBlockingValue(), `is`(partOfMass))
     }
 
-    fun provideFakePartOfMass(partOfMassId: Long = 1, partOfMassName: String = "Wejscie") = PartOfMass(partOfMassId, partOfMassName)
-
     @Test
     fun getPartOfMassById_WhenDataPeristed_ShouldReturnsData() {
-        val partOfMass = provideFakePartOfMass()
+        val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
         val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
         assertThat(partOfMassById, `is`(partOfMass))
@@ -37,15 +33,15 @@ class PartOfMassDaoTest : DbTest() {
 
     @Test
     fun getPartOfMassById_WhenDataNotPeristed_ShouldReturnsNull() {
-        val partOfMass = provideFakePartOfMass()
+        val partOfMass = createFakePartOfMass()
         val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
         assertThat(partOfMassById, nullValue())
     }
 
     @Test
     fun getPartOfMasses_WhenDataPersisted_ShouldReturnsData() {
-        val partOfMass1 = provideFakePartOfMass()
-        val partOfMass2 = provideFakePartOfMass(2)
+        val partOfMass1 = createFakePartOfMass()
+        val partOfMass2 = createFakePartOfMass(2)
         partOfMassDao.insert(partOfMass1)
         partOfMassDao.insert(partOfMass2)
         val partOfMasses = partOfMassDao.getPartOfMasses().getBlockingValue()
@@ -63,7 +59,7 @@ class PartOfMassDaoTest : DbTest() {
 
     @Test
     fun delete_ShouldRemoveGivenData() {
-        val partOfMass = provideFakePartOfMass()
+        val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
         val numberOfDeleted = partOfMassDao.delete(partOfMass)
         val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()

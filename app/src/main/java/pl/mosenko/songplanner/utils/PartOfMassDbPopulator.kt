@@ -16,7 +16,7 @@ open class PartOfMassDbPopulator : Worker(), KoinComponent {
 
     override fun doWork(): Result {
         return try {
-            val initialPartOfMasses = Gson().fromJsonFile<List<PartOfMass>>(applicationContext, PART_OF_MASSES_FILE_NAME)
+            val initialPartOfMasses: List<PartOfMass> = Gson().fromJsonFile<List<PartOfMass>>(applicationContext, PART_OF_MASSES_FILE_NAME)
             partOfMassDao.insertAll(initialPartOfMasses)
             Result.SUCCESS
         } catch (e: Exception) {
