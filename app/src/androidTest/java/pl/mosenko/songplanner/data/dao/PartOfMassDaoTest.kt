@@ -5,7 +5,6 @@ import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.standalone.inject
 import pl.mosenko.songplanner.test.utilities.getBlockingValue
 import pl.mosenko.songplanner.utils.TestDataGenerator.createFakePartOfMass
 
@@ -13,29 +12,29 @@ import pl.mosenko.songplanner.utils.TestDataGenerator.createFakePartOfMass
 @RunWith(AndroidJUnit4::class)
 class PartOfMassDaoTest : DbTest() {
 
-    val partOfMassDao: PartOfMassDao by inject()
+
 
     @Test
-    fun insert_ShouldPersistGivenData() {
+    fun insert_ProperDataGiven_ShouldPersistsGivenData() {
         val partOfMass = createFakePartOfMass()
-        val partOfMassId = partOfMassDao.insert(partOfMass)
-        assertThat(partOfMassId, `is`(1L))
+        val persistedPartOfMass = partOfMassDao.insert(partOfMass)
+        assertThat(persistedPartOfMass, `is`(1L))
         assertThat(partOfMassDao.getPartOfMassById(1).getBlockingValue(), `is`(partOfMass))
     }
 
     @Test
-    fun getPartOfMassById_WhenDataPeristed_ShouldReturnsData() {
+    fun getPartOfMassById_WhenDataPersisted_ShouldReturnsData() {
         val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
-        val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
-        assertThat(partOfMassById, `is`(partOfMass))
+        val persistedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        assertThat(persistedPartOfMassBy, `is`(partOfMass))
     }
 
     @Test
-    fun getPartOfMassById_WhenDataNotPeristed_ShouldReturnsNull() {
+    fun getPartOfMassById_WhenDataNotPersisted_ShouldReturnsNull() {
         val partOfMass = createFakePartOfMass()
-        val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
-        assertThat(partOfMassById, nullValue())
+        val peristedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        assertThat(peristedPartOfMassBy, nullValue())
     }
 
     @Test
@@ -44,26 +43,26 @@ class PartOfMassDaoTest : DbTest() {
         val partOfMass2 = createFakePartOfMass(2)
         partOfMassDao.insert(partOfMass1)
         partOfMassDao.insert(partOfMass2)
-        val partOfMasses = partOfMassDao.getPartOfMasses().getBlockingValue()
-        assertThat(partOfMasses, notNullValue())
-        assertThat(partOfMasses.size, `is`(2))
-        assertThat(partOfMasses[0], `is`(partOfMass1))
-        assertThat(partOfMasses[1], `is`(partOfMass2))
+        val persistedPartOfMasses = partOfMassDao.getPartOfMasses().getBlockingValue()
+        assertThat(persistedPartOfMasses, notNullValue())
+        assertThat(persistedPartOfMasses.size, `is`(2))
+        assertThat(persistedPartOfMasses[0], `is`(partOfMass1))
+        assertThat(persistedPartOfMasses[1], `is`(partOfMass2))
     }
 
     @Test
     fun getPartOfMasses_WhenDataNotPersisted_ShouldReturnsEmptyList() {
-        val partOfMasses = partOfMassDao.getPartOfMasses().getBlockingValue()
-        assertThat(partOfMasses, `is`(emptyList()))
+        val persistedPartOfMasses = partOfMassDao.getPartOfMasses().getBlockingValue()
+        assertThat(persistedPartOfMasses, `is`(emptyList()))
     }
 
     @Test
-    fun delete_ShouldRemoveGivenData() {
+    fun delete_WhenDataGiven_ShouldRemoveDataFromDb() {
         val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
         val numberOfDeleted = partOfMassDao.delete(partOfMass)
-        val partOfMassById = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        val persistedPartOfMass = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
         assertThat(numberOfDeleted, `is`(1))
-        assertThat(partOfMassById, nullValue())
+        assertThat(persistedPartOfMass, nullValue())
     }
 }

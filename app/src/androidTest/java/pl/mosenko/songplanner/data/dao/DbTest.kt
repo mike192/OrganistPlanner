@@ -1,43 +1,33 @@
 package pl.mosenko.songplanner.data.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import org.junit.*
-import org.koin.standalone.StandAloneContext
-import org.koin.standalone.inject
+import androidx.room.Room
+import androidx.test.InstrumentationRegistry
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
 import org.koin.test.KoinTest
 import pl.mosenko.songplanner.data.AppDatabase
-import pl.mosenko.songplanner.roomTestModule
 
 abstract class DbTest : KoinTest {
-    val appDatabase: AppDatabase by inject()
+    lateinit var appDatabase: AppDatabase
+    lateinit var partOfMassDao: PartOfMassDao
+    lateinit var rowDao: RowDao
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    companion object {
-        lateinit var dbInstance: AppDatabase
-
-        @BeforeClass
-        @JvmStatic
-        fun loadDb() {
-            StandAloneContext.loadKoinModules(roomTestModule)
-        }
-
-        @JvmStatic
-        @AfterClass
-        fun closeDb() {
-            dbInstance.close()
-            StandAloneContext.stopKoin()
-        }
-    }
-
     @Before
     fun openDb() {
-        dbInstance = appDatabase
+        appDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), AppDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
+        partOfMassDao = appDatabase.getPartOfMassDao()
+        rowDao = appDatabase.getRowDao()
     }
 
     @After
     fun clearDb() {
-        appDatabase.clearAllTables()
+        appDatabase.close()
     }
 }

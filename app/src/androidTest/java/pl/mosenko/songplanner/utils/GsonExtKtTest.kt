@@ -17,7 +17,7 @@ import java.io.FileNotFoundException
 class GsonExtKtTest {
 
     @Test
-    fun fromJsonFile_shouldReturnListOfPartMasses_WhenCorrectArgumentsGiven() {
+    fun fromJsonFile_WhenProperArgumentsGiven_ShouldReturnsListOfPartMasses() {
         val appContext = InstrumentationRegistry.getContext()
         val partOfMassListSource = TestDataGenerator.createPartOfMassList()
         val partOfMassList = Gson().fromJsonFile<List<PartOfMass>>(appContext, PART_OF_MASSES_FILE_NAME)
@@ -30,13 +30,13 @@ class GsonExtKtTest {
     }
 
     @Test(expected = FileNotFoundException::class)
-    fun fromJsonFile_shouldThrowFileNotFoundException_WhenIncorrectFilenameGiven() {
+    fun fromJsonFile_WhenIncorrectFilenameGiven_ShouldThrowsFileNotFoundException() {
         val appContext = InstrumentationRegistry.getContext()
         Gson().fromJsonFile<List<PartOfMass>>(appContext, "incorrect_file_name.json")
     }
 
     @Test(expected = JsonSyntaxException::class)
-    fun fromJsonFile_shouldThrowException_WhenIncorrectFilenameGiven() {
+    fun fromJsonFile_WhenIncorrectFilenameGive_ShouldThrowException_n() {
         val appContext = InstrumentationRegistry.getContext()
         Gson().fromJsonFile<List<PartOfMass>>(appContext, "improper_part_of_masses.json")
     }

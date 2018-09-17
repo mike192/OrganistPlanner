@@ -5,16 +5,14 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.standalone.inject
 import pl.mosenko.songplanner.test.utilities.getBlockingValue
 
 @RunWith(AndroidJUnit4::class)
 class RowDaoTest : DbTest() {
-    val rowDao: RowDao by inject()
 
     @Test
-    fun getFullRowsBySetOfSongs_ShouldReturnsNothing_WhenNothingPersisted() {
-        val fullRowsBySetOfSongs = rowDao.getFullRowsBySetOfSongs(0).getBlockingValue()
-        assertThat(fullRowsBySetOfSongs, `is`(emptyList()))
+    fun getFullRowsBySetOfSongs_WhenNothingPersisted_ShouldReturnsNothing() {
+        val persistedFullRowsBySetOfSongs = rowDao.getFullRowsBySetOfSongs(0).getBlockingValue()
+        assertThat(persistedFullRowsBySetOfSongs, `is`(emptyList()))
     }
 }
