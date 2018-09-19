@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/main_menu_group" android:checkableBehavior="single">
+        <item
+            android:id="@+id/planned_songs_nav"
+            android:title="@string/menu_navigation_planned"
+            android:icon="@drawable/ic_planned_songs"/>
+        <item
+            android:id="@+id/all_planned_songs_nav"
+            android:title="@string/menu_navigation_all"
+            android:icon="@drawable/ic_all_planned"/>
+    </group>
+    <group android:id="@+id/bottom_menu_group" android:checkableBehavior="single">
+        <item
+            android:id="@+id/settings_nav"
+            android:title="@string/menu_navigation_settings"
+            android:icon="@drawable/ic_settings"/>
+        <item
+            android:id="@+id/about_app_nav"
+            android:title="@string/menu_navigation_about_app"
+            android:icon="@drawable/ic_app_info"/>
+    </group>
+</menu>

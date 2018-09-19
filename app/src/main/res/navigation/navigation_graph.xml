@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/planned_songs_nav">
+
+    <fragment
+        android:id="@+id/planned_songs_nav"
+        android:name="pl.mosenko.songplanner.presentation.fragment.PlannedSongsFragment"
+        android:label="PlannedSongsFragment" >
+        <action
+            android:id="@+id/action_plannedSongsFragment_to_creatingSetOfSongsFragment"
+            app:destination="@id/creating_set_of_songs_nav" />
+    </fragment>
+    <fragment
+        android:id="@+id/about_app_nav"
+        android:name="pl.mosenko.songplanner.presentation.fragment.AboutAppFragment"
+        android:label="AboutAppFragment" />
+    <fragment
+        android:id="@+id/all_planned_songs_nav"
+        android:name="pl.mosenko.songplanner.presentation.fragment.AllPlannedSongsFragment"
+        android:label="AllPlannedSongsFragment" />
+    <fragment
+        android:id="@+id/settings_nav"
+        android:name="pl.mosenko.songplanner.presentation.fragment.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/creating_set_of_songs_nav"
+        android:name="pl.mosenko.songplanner.presentation.fragment.CreatingSetOfSongsFragment"
+        android:label="CreatingSetOfSongsFragment" />
+</navigation>
