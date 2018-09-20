@@ -1,7 +1,7 @@
 package pl.mosenko.songplanner.data.dao
 
-import androidx.room.Delete
-import androidx.room.Insert
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
 
 interface BaseDao<T> {
     @Insert

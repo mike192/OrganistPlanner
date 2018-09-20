@@ -1,8 +1,8 @@
 package pl.mosenko.songplanner.data.dao
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Query
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Query
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import pl.mosenko.songplanner.data.COLUMN_ID

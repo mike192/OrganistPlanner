@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import pl.mosenko.songplanner.R
 import pl.mosenko.songplanner.databinding.ActivityMainBinding
 
@@ -21,9 +22,9 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         val navigationController = Navigation.findNavController(this, R.id.main_nav_fragment)
         setSupportActionBar(binding.toolbar)
-        NavigationUI.setupActionBarWithNavController(this, navigationController, drawerLayout)
+//        NavigationUI.setupActionBarWithNavController(this, navigationController, drawerLayout)
 
-        binding.navigationView.setupWithNavController()
+//        binding.navigationView.setupWithNavController()
 
         setContentView(R.layout.activity_main)
     }
