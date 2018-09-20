@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30dp"
-            tools:text="Creating set of planned songs"/>
+            android:text="Creating set of planned songs"/>
 
     </LinearLayout>
 </layout>

@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="30dp"
-            tools:text="Planned songs"/>
+            android:text="Planned songs"/>
 
     </LinearLayout>
 </layout>
