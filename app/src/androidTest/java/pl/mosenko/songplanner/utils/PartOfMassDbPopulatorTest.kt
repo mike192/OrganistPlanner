@@ -5,7 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.InstrumentationRegistry
 import androidx.work.Data
 import androidx.work.Worker
-import androidx.work.impl.Extras
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Before
@@ -18,6 +19,7 @@ import pl.mosenko.songplanner.data.dao.PartOfMassDao
 import pl.mosenko.songplanner.roomTestModule
 import pl.mosenko.songplanner.test.utilities.getBlockingValue
 import java.util.*
+import java.util.concurrent.Executor
 
 class PartOfMassDbPopulatorTest : KoinTest {
     @get:Rule
@@ -41,7 +43,13 @@ class PartOfMassDbPopulatorTest : KoinTest {
 
     class PartOfMassDbPopulatorMock : PartOfMassDbPopulator() {
         fun initContext(context: Context) {
-            internalInit(context, UUID.randomUUID(), Extras(Data.EMPTY, Collections.emptyList(), Extras.RuntimeExtras(), -1))
+            internalInit(context, WorkerParameters(UUID.randomUUID(),
+                    Data.EMPTY,
+                    listOf<String>(),
+                    WorkerParameters.RuntimeExtras(),
+                    0,
+                    Executor { runnable -> },
+                    WorkerFactory { appContext, workerClassName, workerParameters -> null }))
         }
     }
 }

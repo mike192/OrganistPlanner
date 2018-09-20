@@ -1,6 +1,6 @@
 package pl.mosenko.songplanner.presentation.fragment
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
-class AboutAppFragment : Fragment() {
+class AboutAppFragment : androidx.fragment.app.Fragment() {
 }

@@ -1,10 +1,10 @@
 package pl.mosenko.songplanner.data.dao
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Transaction
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
 import pl.mosenko.songplanner.data.COLUMN_ID
 import pl.mosenko.songplanner.data.model.CREATED_DATE_COLUMN
 import pl.mosenko.songplanner.data.model.PlannedSetOfSongs

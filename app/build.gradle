@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
         kapt {
             arguments {
@@ -46,25 +46,24 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
 
     //Android support
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
-    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
 
     //Navigations
     implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.navigationsVersion"
     implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.navigationsVersion"
 
     // Room components
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomVersion"
-    kapt "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // Lifecycle components
-    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
-    kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
 
     //WorkManager
     implementation "android.arch.work:work-runtime-ktx:$rootProject.workVersion"
@@ -81,10 +80,10 @@ dependencies {
     androidTestImplementation "org.koin:koin-test:$rootProject.koinVersion"
 
     //Unit tests
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$rootProject.junitVersion"
 
     //Instrumentation tests
-    androidTestImplementation "com.android.support.test:runner:$rootProject.supportTestVersion"
-    androidTestImplementation "android.arch.core:core-testing:$rootProject.archLifecycleVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.archTestingVersion"
     androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
 }
