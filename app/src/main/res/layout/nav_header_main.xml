@@ -27,7 +27,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="@color/secondaryLightColor"
+        android:textColor="@color/secondaryTextColor"
         android:textStyle="bold" />
 
 </LinearLayout>

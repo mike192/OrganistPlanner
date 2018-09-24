@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import pl.mosenko.songplanner.databinding.FragmentAboutAppBinding
 
-class AboutAppFragment : Fragment() {
+class AboutAppFragment : HomeBaseFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,

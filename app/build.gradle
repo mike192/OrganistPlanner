@@ -58,6 +58,9 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 

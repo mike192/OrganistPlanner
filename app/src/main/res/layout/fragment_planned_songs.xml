@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="createSetButtonListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="30dp"
-            android:text="Planned songs"/>
+            android:text="Planned songs"
+            android:textSize="30dp" />
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createSetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{createSetButtonListener}"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

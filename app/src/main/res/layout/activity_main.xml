@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -8,10 +9,9 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
@@ -23,7 +23,10 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    android:elevation="4dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    tools:targetApi="lollipop" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -34,7 +37,7 @@
                 android:layout_height="match_parent"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/navigation_graph" />
-        </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"

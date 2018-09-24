@@ -10,7 +10,21 @@
         android:label="PlannedSongsFragment" >
         <action
             android:id="@+id/action_plannedSongsFragment_to_creatingSetOfSongsFragment"
-            app:destination="@id/creating_set_of_songs_nav" />
+            app:destination="@id/creating_set_of_songs_nav"
+            app:popUpTo="@+id/planned_songs_nav" />
+        <action
+            android:id="@+id/action_planned_songs_nav_to_settings_nav2"
+            app:destination="@id/settings_nav"
+            app:popUpTo="@+id/planned_songs_nav"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_planned_songs_nav_to_all_planned_songs_nav2"
+            app:destination="@id/all_planned_songs_nav"
+            app:popUpTo="@+id/planned_songs_nav" />
+        <action
+            android:id="@+id/action_planned_songs_nav_to_about_app_nav2"
+            app:destination="@id/about_app_nav"
+            app:popUpTo="@+id/planned_songs_nav" />
     </fragment>
     <fragment
         android:id="@+id/about_app_nav"
