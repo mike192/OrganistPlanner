@@ -12,10 +12,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import pl.mosenko.songplanner.R
 import pl.mosenko.songplanner.databinding.ActivityMainBinding
+import pl.mosenko.songplanner.presentation.base.DrawerManager
 
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), DrawerManager {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationController: NavController
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(activityMainBinding.toolbar)
         drawerLayout = activityMainBinding.drawerLayout
         navigationController = Navigation.findNavController(this, R.id.main_nav_fragment)
-//        NavigationUI.setupActionBarWithNavController(this, navigationController, drawerLayout)
+        NavigationUI.setupActionBarWithNavController(this, navigationController, drawerLayout)
         activityMainBinding.navigationView.setupWithNavController(navigationController)
     }
 
-    fun addDrawerListener(): ActionBarDrawerToggle {
+    override fun addDrawerListener(): ActionBarDrawerToggle {
         val toggle = ActionBarDrawerToggle(this, drawerLayout, activityMainBinding.toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         return toggle
     }
 
-    fun removeDrawerListener(drawerListener: DrawerLayout.DrawerListener) {
+    override fun removeDrawerListener(drawerListener: DrawerLayout.DrawerListener) {
         drawerLayout.removeDrawerListener(drawerListener)
     }
 

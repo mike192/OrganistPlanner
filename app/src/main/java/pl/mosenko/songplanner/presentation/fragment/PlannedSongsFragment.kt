@@ -12,7 +12,7 @@ import pl.mosenko.songplanner.R
 import pl.mosenko.songplanner.databinding.FragmentPlannedSongsBinding
 import pl.mosenko.songplanner.presentation.MainActivity
 
-class PlannedSongsFragment : HomeBaseFragment() {
+class PlannedSongsFragment : BaseFragment() {
     private lateinit var fragmentPlannedSongsBinding: FragmentPlannedSongsBinding
 
     override fun onCreateView(

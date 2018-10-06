@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/planned_songs_nav"
         android:name="pl.mosenko.songplanner.presentation.fragment.PlannedSongsFragment"
-        android:label="PlannedSongsFragment" >
+        android:label="@string/toolbar_title_planned">
         <action
             android:id="@+id/action_plannedSongsFragment_to_creatingSetOfSongsFragment"
             app:destination="@id/creating_set_of_songs_nav"
@@ -29,17 +29,17 @@
     <fragment
         android:id="@+id/about_app_nav"
         android:name="pl.mosenko.songplanner.presentation.fragment.AboutAppFragment"
-        android:label="AboutAppFragment" />
+        android:label="@string/toolbar_title_about_app" />
     <fragment
         android:id="@+id/all_planned_songs_nav"
         android:name="pl.mosenko.songplanner.presentation.fragment.AllPlannedSongsFragment"
-        android:label="AllPlannedSongsFragment" />
+        android:label="@string/toolbar_title_all" />
     <fragment
         android:id="@+id/settings_nav"
         android:name="pl.mosenko.songplanner.presentation.fragment.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="@string/toolbar_title_settings" />
     <fragment
         android:id="@+id/creating_set_of_songs_nav"
         android:name="pl.mosenko.songplanner.presentation.fragment.CreatingSetOfSongsFragment"
-        android:label="CreatingSetOfSongsFragment" />
+        android:label="@string/toolbar_title_creating_set" />
 </navigation>

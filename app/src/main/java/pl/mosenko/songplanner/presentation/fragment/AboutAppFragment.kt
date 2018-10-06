@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import pl.mosenko.songplanner.databinding.FragmentAboutAppBinding
 
-class AboutAppFragment : HomeBaseFragment() {
+class AboutAppFragment : BaseFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,

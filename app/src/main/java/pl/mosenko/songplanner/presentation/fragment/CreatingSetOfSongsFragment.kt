@@ -1,9 +1,8 @@
 package pl.mosenko.songplanner.presentation.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import pl.mosenko.songplanner.R
 import pl.mosenko.songplanner.databinding.FragmentCreatingSetBinding
 
 class CreatingSetOfSongsFragment : BaseFragment() {
@@ -19,8 +18,18 @@ class CreatingSetOfSongsFragment : BaseFragment() {
         return fragmentCreatingSetBinding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        enableDrawer(false)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mainActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_creating_set, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
