@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="row"
             type="pl.mosenko.songplanner.data.model.Row" />
@@ -12,19 +14,23 @@
         <variable
             name="onExpandListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="isExtendedViewVisible"
+            type="androidx.databinding.ObservableBoolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp">
+        android:layout_height="wrap_content">
 
 
         <FrameLayout
             android:id="@+id/dragLayout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:paddingStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/topGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry">
@@ -47,7 +53,7 @@
             android:hint="@string/creating_set_part_of_mass"
             app:hintAnimationEnabled="false"
             app:hintEnabled="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/topGuideline"
             app:layout_constraintEnd_toStartOf="@+id/expandLayout"
             app:layout_constraintStart_toEndOf="@+id/dragLayout"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,7 +75,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:onClick="@{onExpandListener}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/topGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -83,6 +89,22 @@
 
         </FrameLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="72dp" />
 
+        <View
+            android:id="@+id/expanded_layout"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/colorAccent"
+            android:visibility="@{isExtendedViewVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topGuideline"
+            tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

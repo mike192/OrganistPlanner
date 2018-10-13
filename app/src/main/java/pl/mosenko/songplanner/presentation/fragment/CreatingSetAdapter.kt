@@ -4,8 +4,9 @@ import android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.databinding.ObservableBoolean
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import pl.mosenko.songplanner.data.model.PartOfMass
 import pl.mosenko.songplanner.data.model.Row
 import pl.mosenko.songplanner.databinding.CreatingRowItemBinding
@@ -13,39 +14,59 @@ import pl.mosenko.songplanner.presentation.adapter.DropDownArrayAdapter
 import pl.mosenko.songplanner.presentation.adapter.DropDownItem
 
 class CreatingSetAdapter(
-        private val rowList: List<Row>,
+        rowList: List<Row>,
         private val partOfMassList: List<PartOfMass>)
     : RecyclerView.Adapter<CreatingSetAdapter.ViewHolder>() {
 
+    var viewHolderRowList: MutableList<ViewHolderRow> = rowList
+            .map { ViewHolderRow(ObservableBoolean(false), it) }
+            .toMutableList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(CreatingRowItemBinding.inflate(
+        val viewHolder = ViewHolder(CreatingRowItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-        ))
+        )).apply {
+            setIsRecyclable(false)
+        }
+        return viewHolder
     }
 
     override fun getItemCount(): Int {
-        return rowList.size
+        return viewHolderRowList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(rowList.get(position))
+        holder.bind(position, viewHolderRowList.get(position))
+    }
+
+    private lateinit var recyclerView: RecyclerView
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
     }
 
     inner class ViewHolder(private val creatingRowItemBinding: CreatingRowItemBinding)
         : RecyclerView.ViewHolder(creatingRowItemBinding.root) {
 
-        fun bind(row: Row) {
+        fun bind(position: Int, viewHolderRow: ViewHolderRow) {
             creatingRowItemBinding.apply {
-                this.row = row
-                this.onExpandListener = View.OnClickListener { onExpandClickListener(it) }
+                row = viewHolderRow.row
+                onExpandListener = View.OnClickListener { onExpandClickListener(position, viewHolderRow) }
                 //convert list of part mass before this block in the outer class
                 val partOfMassAdapter = DropDownArrayAdapter(itemView.context, R.layout.simple_dropdown_item_1line, partOfMassList.map { DropDownItem(it.partOfMassId!!, it.partOfMassName) })
-                this.rowEditText.setDropDownArrayAdapter(partOfMassAdapter)
+                rowEditText.setDropDownArrayAdapter(partOfMassAdapter)
+                isExtendedViewVisible = viewHolderRow.isExtendedViewVisible
             }
         }
 
-        fun onExpandClickListener(view: View?) {
-            Toast.makeText(view!!.context, "Kliknieto!!!", Toast.LENGTH_LONG).show()
+        fun onExpandClickListener(position: Int, viewHolderRow: ViewHolderRow) {
+            viewHolderRow.isExtendedViewVisible.set(!viewHolderRow.isExtendedViewVisible.get())
+            TransitionManager.beginDelayedTransition(recyclerView)
+//            notifyItemChanged(position)
+            notifyDataSetChanged() // it's seems to work better
         }
     }
 }
+
+data class ViewHolderRow(var isExtendedViewVisible: ObservableBoolean, val row: Row)
