@@ -2,7 +2,10 @@ package pl.mosenko.songplanner.presentation.fragment
 
 import android.os.Bundle
 import android.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import pl.mosenko.songplanner.R
+import pl.mosenko.songplanner.data.model.PartOfMass
+import pl.mosenko.songplanner.data.model.Row
 import pl.mosenko.songplanner.databinding.FragmentCreatingSetBinding
 
 class CreatingSetOfSongsFragment : BaseFragment() {
@@ -15,6 +18,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         fragmentCreatingSetBinding = FragmentCreatingSetBinding.inflate(inflater, container, false)
+        setupRecyclerView()
         return fragmentCreatingSetBinding.root
     }
 
@@ -26,6 +30,26 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    private fun setupRecyclerView() {
+        val partOfMassList = createPartOfMassList()
+        val preinitializedRows = partOfMassList.mapIndexed { index, item ->
+            Row(index.toLong(), item)
+        }
+        fragmentCreatingSetBinding.rowRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@CreatingSetOfSongsFragment.context)
+            adapter = CreatingSetAdapter(preinitializedRows, partOfMassList)
+        }
+    }
+
+    fun createPartOfMassList() : List<PartOfMass> {
+        return listOf(
+                PartOfMass(1, "Wejście", true, 1)
+                , PartOfMass(2, "Przygotowanie darów", true, 2)
+                , PartOfMass(3, "Komunia", true, 3)
+                , PartOfMass(4, "Uwielbienie", true, 4)
+                , PartOfMass(5, "Zakończenie", true, 5))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

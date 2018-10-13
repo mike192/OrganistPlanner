@@ -26,6 +26,7 @@ class BaseApplication : Application() {
                             WorkManager.getInstance().enqueue(populatorRequest)
                         }
                     })
+                    .fallbackToDestructiveMigration() // only for testing purpose
                     .build()
         }
         single { get<AppDatabase>().getPartOfMassDao() }
@@ -42,7 +43,7 @@ class BaseApplication : Application() {
         startKoin(this, listOf(baseModule))
     }
 
-    fun initializeTimber() {
+    private fun initializeTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

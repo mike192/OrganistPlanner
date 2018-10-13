@@ -13,6 +13,6 @@ object TestDataGenerator {
                 , PartOfMass(5, "Rozesłanie"))
     }
 
-    fun createFakePartOfMass(partOfMassId: Long = 1, partOfMassName: String = "Wejscie") = PartOfMass(partOfMassId, partOfMassName)
+    fun createFakePartOfMass(partOfMassId: Long? = 1, partOfMassName: String = "Wejscie") = PartOfMass(partOfMassId, partOfMassName)
 
 }

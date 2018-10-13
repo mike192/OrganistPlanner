@@ -20,4 +20,7 @@
     <string name="creating_set_occasion_hint">Okoliczność</string>
     <string name="creating_set_liturgical_year_hint">Rok lit.</string>
     <string name="creating_set_author">Autor</string>
+    <string name="creating_set_part_of_mass">Część Mszy Św.</string>
+
+    <string name="dropdown_item_remove_item">Remove item</string>
 </resources>

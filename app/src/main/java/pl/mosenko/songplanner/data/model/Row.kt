@@ -29,10 +29,25 @@ const val ORDINAL_COLUMN = "ordinal"
         )
         ],
         indices = [Index(SONGBOOK_SONG_ID_COLUMN), Index(PART_OF_MASS_ID_COLUMN), Index(SET_OF_SONGS_ID_COLUMN)])
-data class Row(@PrimaryKey(autoGenerate = true)  @ColumnInfo(name = COLUMN_ID) var rowId: Long,
+data class Row(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) var rowId: Long? = null,
                @ColumnInfo(name = SONGBOOK_SONG_ID_COLUMN) var songbookSongId: Long,
                @ColumnInfo(name = PART_OF_MASS_ID_COLUMN) var partOfMassId: Long,
                @ColumnInfo(name = SET_OF_SONGS_ID_COLUMN) var setOfSongsId: Long,
                @ColumnInfo(name = VERSES_NUMBERS_COLUMN) var versesNumbers: String?,
-               @ColumnInfo(name = ORDINAL_COLUMN) var ordinal: Long)
+               @ColumnInfo(name = ORDINAL_COLUMN) var ordinal: Long) {
+
+    constructor(ordinal: Long, partOfMass: PartOfMass) : this(
+            songbookSongId = 0,
+            partOfMassId = partOfMass.partOfMassId!!,
+            setOfSongsId = 0,
+            versesNumbers = null,
+            ordinal = ordinal) {
+        this.partOfMass = partOfMass
+    }
+
+    @Ignore
+    var partOfMass: PartOfMass? = null
+    @Ignore
+    var songbookSong: SongbookSong? = null
+}
 

@@ -13,7 +13,6 @@ import pl.mosenko.songplanner.utils.TestDataGenerator.createFakePartOfMass
 class PartOfMassDaoTest : DbTest() {
 
 
-
     @Test
     fun insert_ProperDataGiven_ShouldPersistsGivenData() {
         val partOfMass = createFakePartOfMass()
@@ -26,14 +25,14 @@ class PartOfMassDaoTest : DbTest() {
     fun getPartOfMassById_WhenDataPersisted_ShouldReturnsData() {
         val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
-        val persistedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        val persistedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId!!).getBlockingValue()
         assertThat(persistedPartOfMassBy, `is`(partOfMass))
     }
 
     @Test
     fun getPartOfMassById_WhenDataNotPersisted_ShouldReturnsNull() {
         val partOfMass = createFakePartOfMass()
-        val peristedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        val peristedPartOfMassBy = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId!!).getBlockingValue()
         assertThat(peristedPartOfMassBy, nullValue())
     }
 
@@ -61,7 +60,7 @@ class PartOfMassDaoTest : DbTest() {
         val partOfMass = createFakePartOfMass()
         partOfMassDao.insert(partOfMass)
         val numberOfDeleted = partOfMassDao.delete(partOfMass)
-        val persistedPartOfMass = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId).getBlockingValue()
+        val persistedPartOfMass = partOfMassDao.getPartOfMassById(partOfMass.partOfMassId!!).getBlockingValue()
         assertThat(numberOfDeleted, `is`(1))
         assertThat(persistedPartOfMass, nullValue())
     }
