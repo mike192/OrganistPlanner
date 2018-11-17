@@ -10,14 +10,19 @@ import pl.mosenko.songplanner.utils.DateTypeConverter
 const val DB_NAME = "songs_of_mass.db"
 const val COLUMN_ID = "id"
 const val DB_VERSION = 1
+const val SQLITE_FALSE = 0
+const val SQLITE_TRUE = 1
 
-@Database(entities = arrayOf(
+@Database(
+    entities = arrayOf(
         PartOfMass::class,
         Row::class,
         SetOfSongs::class,
         Song::class,
         Songbook::class,
-        SongbookSong::class), version = DB_VERSION)
+        SongbookSong::class
+    ), version = DB_VERSION
+)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getPartOfMassDao(): PartOfMassDao

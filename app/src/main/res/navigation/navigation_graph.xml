@@ -40,6 +40,6 @@
         android:label="@string/toolbar_title_settings" />
     <fragment
         android:id="@+id/creating_set_of_songs_nav"
-        android:name="pl.mosenko.songplanner.presentation.fragment.CreatingSetOfSongsFragment"
+        android:name="pl.mosenko.songplanner.presentation.fragment.creating_set.CreatingSetOfSongsFragment"
         android:label="@string/toolbar_title_creating_set" />
 </navigation>

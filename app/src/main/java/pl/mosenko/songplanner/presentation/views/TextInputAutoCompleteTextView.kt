@@ -14,16 +14,17 @@ import pl.mosenko.songplanner.R
 
 @TargetApi(Build.VERSION_CODES.N)
 open class TextInputAutoCompleteTextView(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int,
-        popupTheme: Resources.Theme?)
-    : AutoCompleteTextView(
-        context, attrs,
-        defStyleAttr,
-        defStyleRes,
-        popupTheme) {
+    context: Context?,
+    attrs: AttributeSet?,
+    defStyleAttr: Int,
+    defStyleRes: Int,
+    popupTheme: Resources.Theme?
+) : AutoCompleteTextView(
+    context, attrs,
+    defStyleAttr,
+    defStyleRes,
+    popupTheme
+) {
 
     constructor(context: Context) : this(context, null)
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Church planner</string>
     <string name="navigation_drawer_open">Otwórz menu boczne</string>
     <string name="navigation_drawer_close">Zamknij menu boczne</string>
@@ -19,6 +19,13 @@
     <string name="creating_set_date_hint">Data</string>
     <string name="creating_set_occasion_hint">Okoliczność</string>
     <string name="creating_set_liturgical_year_hint">Rok lit.</string>
-    <string name="creating_set_author">Autor</string>
+    <string name="creating_set_author" tools:ignore="Typos">Autor</string>
     <string name="creating_set_part_of_mass">Część Mszy Św.</string>
+    <string name="creating_set_song">Śpiew/Utwór</string>
+    <string name="creating_set_verses">Zwrotki</string>
+    <string name="creating_set_songbook">Śpiewnik</string>
+    <string name="creating_set_songbook_number">Nr/Str.</string>
+    <string name="creating_set_slide_number">Numer slajdu</string>
+
+    <string name="planned_songs_lack_of_planned_songs">Brak zaplanowanych śpiewów na najbliższy czas, aby zaplanować kliknij przycisk \'+\'</string>
 </resources>

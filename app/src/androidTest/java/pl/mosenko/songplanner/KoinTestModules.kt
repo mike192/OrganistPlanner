@@ -7,7 +7,7 @@ import pl.mosenko.songplanner.data.AppDatabase
 val roomTestModule = module {
     single(override = true) {
         Room.inMemoryDatabaseBuilder(get(), AppDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+            .allowMainThreadQueries()
+            .build()
     }
 }

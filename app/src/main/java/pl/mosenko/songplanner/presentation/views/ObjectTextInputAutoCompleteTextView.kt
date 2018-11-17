@@ -11,16 +11,17 @@ import pl.mosenko.songplanner.presentation.adapter.DropDownItem
 
 @TargetApi(Build.VERSION_CODES.N)
 class ObjectTextInputAutoCompleteTextView(
-        context: Context?,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int,
-        popupTheme: Resources.Theme?)
-    : TextInputAutoCompleteTextView(
-        context, attrs,
-        defStyleAttr,
-        defStyleRes,
-        popupTheme) {
+    context: Context?,
+    attrs: AttributeSet?,
+    defStyleAttr: Int,
+    defStyleRes: Int,
+    popupTheme: Resources.Theme?
+) : TextInputAutoCompleteTextView(
+    context, attrs,
+    defStyleAttr,
+    defStyleRes,
+    popupTheme
+) {
 
     constructor(context: Context) : this(context, null)
 

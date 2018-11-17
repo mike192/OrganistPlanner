@@ -13,6 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- TODO to replace after implementing appropriate recyclerview-->
+        <TextView
+            android:id="@+id/testPlannedSongs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="@string/planned_songs_lack_of_planned_songs" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createSetButton"
             android:layout_width="wrap_content"
@@ -20,7 +29,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{createSetButtonListener}"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@drawable/ic_add" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

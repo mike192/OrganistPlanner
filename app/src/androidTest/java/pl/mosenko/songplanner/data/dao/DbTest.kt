@@ -19,9 +19,12 @@ abstract class DbTest : KoinTest {
 
     @Before
     fun openDb() {
-        appDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), AppDatabase::class.java)
-                .allowMainThreadQueries()
-                .build()
+        appDatabase = Room.inMemoryDatabaseBuilder(
+            InstrumentationRegistry.getContext(),
+            AppDatabase::class.java
+        )
+            .allowMainThreadQueries()
+            .build()
         partOfMassDao = appDatabase.getPartOfMassDao()
         rowDao = appDatabase.getRowDao()
     }

@@ -8,8 +8,10 @@ class PlannedSetOfSongs {
     @Embedded
     var setOfSongs: SetOfSongs? = null
 
-    @Relation(parentColumn = COLUMN_ID,
-            entityColumn = SET_OF_SONGS_ID_COLUMN,
-            entity = Row::class)
-    var rowList : List<Row> = ArrayList()
+    @Relation(
+        parentColumn = COLUMN_ID,
+        entityColumn = SET_OF_SONGS_ID_COLUMN,
+        entity = Row::class
+    )
+    var rowList: List<Row> = ArrayList()
 }

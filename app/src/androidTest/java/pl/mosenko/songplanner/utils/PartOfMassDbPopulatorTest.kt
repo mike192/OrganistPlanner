@@ -43,13 +43,15 @@ class PartOfMassDbPopulatorTest : KoinTest {
 
     class PartOfMassDbPopulatorMock : PartOfMassDbPopulator() {
         fun initContext(context: Context) {
-            internalInit(context, WorkerParameters(UUID.randomUUID(),
+            internalInit(
+                context, WorkerParameters(UUID.randomUUID(),
                     Data.EMPTY,
                     listOf<String>(),
                     WorkerParameters.RuntimeExtras(),
                     0,
                     Executor { runnable -> },
-                    WorkerFactory { appContext, workerClassName, workerParameters -> null }))
+                    WorkerFactory { appContext, workerClassName, workerParameters -> null })
+            )
         }
     }
 }

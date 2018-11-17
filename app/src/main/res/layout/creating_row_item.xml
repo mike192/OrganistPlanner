@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <FrameLayout
             android:id="@+id/dragLayout"
             android:layout_width="wrap_content"
@@ -46,11 +45,12 @@
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/rowLayout"
+            android:id="@+id/basicSongLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:hint="@string/creating_set_part_of_mass"
+            android:hint="@{row.partOfMass.partOfMassName}"
+            android:visibility="@{isExtendedViewVisible ? View.GONE : View.VISIBLE}"
             app:hintAnimationEnabled="false"
             app:hintEnabled="true"
             app:layout_constraintBottom_toBottomOf="@+id/topGuideline"
@@ -59,12 +59,32 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
-                android:id="@+id/rowEditText"
+                android:id="@+id/basicSongInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/creating_set_song"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/partOfMassInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:visibility="@{isExtendedViewVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/topGuideline"
+            app:layout_constraintEnd_toStartOf="@+id/expandLayout"
+            app:layout_constraintStart_toEndOf="@+id/dragLayout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                android:id="@+id/partOfMassInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/creating_set_part_of_mass"
-                android:text="@{row.partOfMass.partOfMassName}"
-                tools:hint="Wejscie" />
+                android:singleLine="true"
+                android:text="@{row.partOfMass.partOfMassName}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,8 +104,9 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_chevron_down"
-                tools:ignore="ContentDescription" />
+                app:srcCompat="@{isExtendedViewVisible ? @drawable/ic_chevron_up : @drawable/ic_chevron_down}"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/ic_chevron_up" />
 
         </FrameLayout>
 
@@ -96,15 +117,113 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="72dp" />
 
-        <View
-            android:id="@+id/expanded_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/collapsibleLayout"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/colorAccent"
+            android:layout_height="wrap_content"
             android:visibility="@{isExtendedViewVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/topGuideline"
-            tools:visibility="gone" />
+            tools:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/songInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/versesNumbersLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.7">
+
+                <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                    android:id="@+id/songInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/creating_set_song"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/versesNumbersLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/songInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/songInputLayout">
+
+                <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                    android:id="@+id/versesNumbersInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/creating_set_verses"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/songbookInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                app:layout_constraintEnd_toStartOf="@+id/numberInSongbookLayout"
+                app:layout_constraintStart_toStartOf="@+id/songInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/songInputLayout"
+                app:layout_constraintWidth_percent="0.7">
+
+                <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                    android:id="@+id/songbookInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/creating_set_songbook"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/numberInSongbookLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/versesNumbersLayout"
+                app:layout_constraintStart_toEndOf="@+id/songbookInputLayout"
+                app:layout_constraintTop_toTopOf="@+id/songbookInputLayout">
+
+                <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                    android:id="@+id/numberInSongbookInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/creating_set_songbook_number"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/slideNumberLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/numberInSongbookLayout"
+                app:layout_constraintStart_toStartOf="@+id/songbookInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/songbookInputLayout">
+
+                <pl.mosenko.songplanner.presentation.views.ObjectTextInputAutoCompleteTextView
+                    android:id="@+id/slideNumberInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/creating_set_slide_number"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

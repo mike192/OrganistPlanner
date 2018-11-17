@@ -9,9 +9,9 @@ import pl.mosenko.songplanner.databinding.FragmentAboutAppBinding
 class AboutAppFragment : BaseFragment() {
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val fragmentAboutAppBinding = FragmentAboutAppBinding.inflate(inflater, container, false)
         return fragmentAboutAppBinding.root

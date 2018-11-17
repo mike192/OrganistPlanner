@@ -32,8 +32,10 @@ class MainActivity : AppCompatActivity(), DrawerManager {
     }
 
     override fun addDrawerListener(): ActionBarDrawerToggle {
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, activityMainBinding.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, activityMainBinding.toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         return toggle
