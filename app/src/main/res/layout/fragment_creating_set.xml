@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="pl.mosenko.songplanner.viewmodel.CreatingSetViewModel" />
+            type="pl.mosenko.songplanner.features.creating_sets.CreatingSetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

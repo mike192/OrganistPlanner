@@ -2,7 +2,7 @@ package pl.mosenko.songplanner
 
 import androidx.room.Room
 import org.koin.dsl.module.module
-import pl.mosenko.songplanner.data.AppDatabase
+import pl.mosenko.songplanner.core.db.AppDatabase
 
 val roomTestModule = module {
     single(override = true) {

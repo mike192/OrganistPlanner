@@ -7,7 +7,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.koin.test.KoinTest
-import pl.mosenko.songplanner.data.AppDatabase
+import pl.mosenko.songplanner.core.db.AppDatabase
+import pl.mosenko.songplanner.data.part_of_mass.PartOfMassDao
+import pl.mosenko.songplanner.data.row.RowDao
 
 abstract class DbTest : KoinTest {
     lateinit var appDatabase: AppDatabase

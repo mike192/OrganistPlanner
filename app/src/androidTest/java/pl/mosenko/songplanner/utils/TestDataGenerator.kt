@@ -1,6 +1,6 @@
 package pl.mosenko.songplanner.utils
 
-import pl.mosenko.songplanner.data.model.PartOfMass
+import pl.mosenko.songplanner.data.part_of_mass.PartOfMass
 
 object TestDataGenerator {
 
