@@ -14,6 +14,9 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     private val creatingSetViewModel: CreatingSetViewModel by viewModel()
     private lateinit var fragmentCreatingSetBinding: FragmentCreatingSetBinding
 
+    //TODO fill in SetOfSongs object with two way data binding and view model
+    //make data picker for date, autocomplete for occasion and spinner for liturgical year
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,9 +46,9 @@ class CreatingSetOfSongsFragment : BaseFragment() {
 
     private fun setupAdapter(creatingSetAdapterParams: CreatingSetAdapterParams) {
         fragmentCreatingSetBinding.rowRecyclerView.adapter =
-                CreatingSetAdapter(
-                    creatingSetAdapterParams
-                )
+            CreatingSetAdapter(
+                creatingSetAdapterParams
+            )
     }
 
     private fun setupRecyclerView() {

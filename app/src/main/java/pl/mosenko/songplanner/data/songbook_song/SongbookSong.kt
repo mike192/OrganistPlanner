@@ -10,6 +10,7 @@ const val SONG_ID_COLUMN = "song_id"
 const val SONGBOOK_ID_COLUMN = "songbook_id"
 const val SLIDE_NUMBER_COLUMN = "slide_number"
 const val NUMBER_IN_SONGBOOK_COLUMN = "number_in_songbook"
+const val COMMENT_COLUMN = "comment_column"
 
 @Entity(
     tableName = SONGBOOK_SONG_TABLE,
@@ -30,8 +31,23 @@ const val NUMBER_IN_SONGBOOK_COLUMN = "number_in_songbook"
 )
 data class SongbookSong(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) var songbookSongId: Long,
-    @ColumnInfo(name = NUMBER_IN_SONGBOOK_COLUMN) var numberInSongbook: String,
+    @ColumnInfo(name = NUMBER_IN_SONGBOOK_COLUMN) var numberInSongbook: String?,
     @ColumnInfo(name = SONG_ID_COLUMN) var songId: Long,
     @ColumnInfo(name = SONGBOOK_ID_COLUMN) var songbookId: Long?,
-    @ColumnInfo(name = SLIDE_NUMBER_COLUMN) var slideNumber: String?
-)
+    @ColumnInfo(name = SLIDE_NUMBER_COLUMN) var slideNumber: String?,
+    @ColumnInfo(name = COMMENT_COLUMN) var comment: String?
+) {
+    constructor() : this(
+        songbookSongId = 0,
+        numberInSongbook = null,
+        songId = 0,
+        songbookId = 0,
+        slideNumber = null,
+        comment = null
+    )
+
+    @Ignore
+    var song: Song? = null
+    @Ignore
+    var songbook: Songbook? = null
+}

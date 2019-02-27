@@ -11,5 +11,8 @@ const val SONGBOOK_NAME_COLUMN = "songbook_name"
 @Entity(tableName = SONGBOOK_TABLE)
 data class Songbook(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = COLUMN_ID) var songbookId: Long,
-    @ColumnInfo(name = SONGBOOK_NAME_COLUMN) var songbookName: String?
-)
+    @ColumnInfo(name = SONGBOOK_NAME_COLUMN) var songbookName: String
+//TODO TEMP songbookName wil be "" for non selected songbook
+) {
+    constructor(songbookName: String) : this(songbookId = 0, songbookName = songbookName)
+}

@@ -56,6 +56,7 @@ data class Row(
         ordinal = ordinal
     ) {
         this.partOfMass = partOfMass
+        this.songbookSong = SongbookSong()
     }
 
     @Ignore

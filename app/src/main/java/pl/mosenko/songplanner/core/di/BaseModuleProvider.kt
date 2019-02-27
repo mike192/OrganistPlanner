@@ -17,6 +17,10 @@ import pl.mosenko.songplanner.data.part_of_mass.PartOfMassDataSource
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsDataSource
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsRepository
+import pl.mosenko.songplanner.data.song.SongDataSource
+import pl.mosenko.songplanner.data.song.SongRepository
+import pl.mosenko.songplanner.data.songbook_song.SongbookSongDataSource
+import pl.mosenko.songplanner.data.songbook_song.SongbookSongRepository
 import pl.mosenko.songplanner.features.creating_sets.CreatingSetViewModel
 import pl.mosenko.songplanner.features.planned_songs.PlannedSongsViewModel
 
@@ -33,7 +37,9 @@ fun buildBaseModule(): Module {
         single { get<AppDatabase>().getSongbookSongDao() }
         single { PartOfMassDataSource(get()) as PartOfMassRepository }
         single { SetOfSongsDataSource(get()) as SetOfSongsRepository }
-        viewModel { CreatingSetViewModel(get()) }
+        single { SongDataSource(get()) as SongRepository }
+        single { SongbookSongDataSource(get()) as SongbookSongRepository }
+        viewModel { CreatingSetViewModel(get(), get()) }
         viewModel { PlannedSongsViewModel(get()) }
     }
 }

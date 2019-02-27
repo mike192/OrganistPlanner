@@ -10,4 +10,7 @@ import pl.mosenko.songplanner.core.db.COLUMN_ID
 interface SongDao : BaseDao<Song> {
     @Query("select * from $SONG_TABLE where $COLUMN_ID = :songId")
     fun getSongById(songId: Long): LiveData<Song>
+
+    @Query("select * from $SONG_TABLE")
+    fun getSongs(): LiveData<List<Song>>
 }
