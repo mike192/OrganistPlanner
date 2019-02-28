@@ -24,7 +24,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     ): View? {
         fragmentCreatingSetBinding = FragmentCreatingSetBinding.inflate(inflater, container, false)
         fragmentCreatingSetBinding.viewModel = creatingSetViewModel
-        fragmentCreatingSetBinding.setLifecycleOwner(this)
+        fragmentCreatingSetBinding.lifecycleOwner = this
         setupRecyclerView()
         observeViewModel()
         return fragmentCreatingSetBinding.root

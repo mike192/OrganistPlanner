@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lectionary_cycles">
+        <item>@string/creating_set_lectionary_cycle_hint</item>
+        <item>Cykl A</item>
+        <item>Cykl B</item>
+        <item>Cykl C</item>
+        <item>Cykl I</item>
+        <item>Cykl II</item>
+    </string-array>
+</resources>
