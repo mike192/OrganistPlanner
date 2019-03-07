@@ -39,10 +39,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/occasionInputLayout"
-            android:layout_width="379dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="80dp">
+            app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/occasionEditText"
@@ -54,16 +55,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
-            android:id="@+id/liturgicalYearInputLayout"
+            android:id="@+id/lectionaryCyclesSpinner"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/creating_set_lectionary_cycle_hint"
             app:layout_constraintBottom_toBottomOf="@+id/authorInputLayout"
             app:layout_constraintEnd_toStartOf="@+id/authorInputLayout"
             app:layout_constraintStart_toStartOf="@+id/occasionInputLayout"
             app:layout_constraintTop_toTopOf="@+id/authorInputLayout"
             app:layout_constraintWidth_percent="0.3"
+            app:selectedValue="@={viewModel.lectionaryCycle}"
             tools:entries="@array/lectionary_cycles" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="@+id/occasionInputLayout"
-            app:layout_constraintStart_toEndOf="@+id/liturgicalYearInputLayout"
+            app:layout_constraintStart_toEndOf="@+id/lectionaryCyclesSpinner"
             app:layout_constraintTop_toBottomOf="@+id/occasionInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText

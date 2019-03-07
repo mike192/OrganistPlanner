@@ -5,6 +5,7 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import pl.mosenko.songplanner.R
+import pl.mosenko.songplanner.core.adapter.HintArrayAdapter
 import pl.mosenko.songplanner.core.extensions.observe
 import pl.mosenko.songplanner.core.platform.BaseFragment
 import pl.mosenko.songplanner.databinding.FragmentCreatingSetBinding
@@ -15,7 +16,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     private lateinit var fragmentCreatingSetBinding: FragmentCreatingSetBinding
 
     //TODO fill in SetOfSongs object with two way data binding and view model
-    //make data picker for date, autocomplete for occasion and spinner for liturgical year
+    //make data picker for date, autocomplete for occasion and --spinner-- for liturgical year
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,9 +26,19 @@ class CreatingSetOfSongsFragment : BaseFragment() {
         fragmentCreatingSetBinding = FragmentCreatingSetBinding.inflate(inflater, container, false)
         fragmentCreatingSetBinding.viewModel = creatingSetViewModel
         fragmentCreatingSetBinding.lifecycleOwner = this
+        setupLectionaryCyclesSpinner()
         setupRecyclerView()
         observeViewModel()
         return fragmentCreatingSetBinding.root
+    }
+
+    private fun setupLectionaryCyclesSpinner() {
+        val lectionaryCycles = listOf(
+            *resources.getStringArray(R.array.lectionary_cycles)
+        )
+        fragmentCreatingSetBinding.lectionaryCyclesSpinner.adapter =
+            HintArrayAdapter<String>(context = context!!, objects = lectionaryCycles)
+        fragmentCreatingSetBinding.lectionaryCyclesSpinner.selectedItem
     }
 
     override fun onStart() {

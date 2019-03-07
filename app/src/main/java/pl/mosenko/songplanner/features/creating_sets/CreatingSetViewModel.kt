@@ -20,9 +20,11 @@ class CreatingSetViewModel(
 ) : ViewModel() {
 
     val arePreinitializedRowsLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val lectionaryCycle: MutableLiveData<String> = MutableLiveData()
 
     //TODO change all these source live data to rx observable
     // divide it into single live data, which should be used in adapter
+    // but fetch at the same moment
     fun getCreatingSetAdapterParams(): LiveData<CreatingSetAdapterParams> {
         arePreinitializedRowsLoading.value = true
         return MediatorLiveData<CreatingSetAdapterParams>().apply {

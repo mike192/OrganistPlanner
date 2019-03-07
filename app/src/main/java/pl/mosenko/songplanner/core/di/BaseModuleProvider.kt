@@ -19,6 +19,8 @@ import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsDataSource
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsRepository
 import pl.mosenko.songplanner.data.song.SongDataSource
 import pl.mosenko.songplanner.data.song.SongRepository
+import pl.mosenko.songplanner.data.songbook.SongbookDataSource
+import pl.mosenko.songplanner.data.songbook.SongbookRepository
 import pl.mosenko.songplanner.data.songbook_song.SongbookSongDataSource
 import pl.mosenko.songplanner.data.songbook_song.SongbookSongRepository
 import pl.mosenko.songplanner.features.creating_sets.CreatingSetViewModel
@@ -39,7 +41,8 @@ fun buildBaseModule(): Module {
         single { SetOfSongsDataSource(get()) as SetOfSongsRepository }
         single { SongDataSource(get()) as SongRepository }
         single { SongbookSongDataSource(get()) as SongbookSongRepository }
-        viewModel { CreatingSetViewModel(get(), get()) }
+        single { SongbookDataSource(get()) as SongbookRepository }
+        viewModel { CreatingSetViewModel(get(), get(), get()) }
         viewModel { PlannedSongsViewModel(get()) }
     }
 }
@@ -49,15 +52,15 @@ private fun ModuleDefinition.getAppDatabase(): AppDatabase {
         androidContext(),
         AppDatabase::class.java,
         DB_NAME
-    )
-        .addCallback(object : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                val populatorRequest =
-                    OneTimeWorkRequestBuilder<PartOfMassDbPopulator>().build()
-                WorkManager.getInstance().enqueue(populatorRequest)
-            }
-        })
+    )//TODO uncomment after increase version of WorkManager API
+//        .addCallback(object : RoomDatabase.Callback() {
+//            override fun onCreate(db: SupportSQLiteDatabase) {
+//                super.onCreate(db)
+//                val populatorRequest =
+//                    OneTimeWorkRequestBuilder<PartOfMassDbPopulator>().build()
+//                WorkManager.getInstance().enqueue(populatorRequest)
+//            }
+//        })
         .fallbackToDestructiveMigration() // TODO(to remove) only for testing purpose
         .build()
 }
