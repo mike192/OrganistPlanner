@@ -3,13 +3,14 @@
     <color name="colorPrimary">@color/primaryColor</color>
     <color name="colorPrimaryDark">@color/primaryDarkColor</color>
     <color name="colorAccent">@color/secondaryColor</color>
+    <color name="colorAccentDark">@color/secondaryDarkColor</color>
 
     <color name="primaryColor">#4caf50</color>
     <color name="primaryLightColor">#80e27e</color>
     <color name="primaryDarkColor">#087f23</color>
-    <color name="secondaryColor">#ffeb3b</color>
-    <color name="secondaryLightColor">#ffff72</color>
-    <color name="secondaryDarkColor">#c8b900</color>
+    <color name="secondaryColor">#FFD607</color>
+    <color name="secondaryLightColor">#FFDF72</color>
+    <color name="secondaryDarkColor">#E4BE05</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="white">#ffffff</color>

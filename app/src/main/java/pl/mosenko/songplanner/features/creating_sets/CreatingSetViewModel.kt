@@ -5,7 +5,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatterBuilder
+import org.threeten.bp.temporal.ChronoField
 import pl.mosenko.songplanner.core.adapter.DropDownItem
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMass
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
@@ -22,13 +24,20 @@ class CreatingSetViewModel(
     private val songbookRepository: SongbookRepository
 ) : ViewModel() {
 
-    private val dateFormatter = DateTimeFormatterBuilder()
-        .appendPattern(DATE_FORMAT_PATTERN)
-        .toFormatter(Locale.getDefault())
+    private val dateFormatter = createDateTimeFormatter()
     val arePreinitializedRowsLoading: MutableLiveData<Boolean> = MutableLiveData()
     val lectionaryCycle: MutableLiveData<String> = MutableLiveData()
     val createdDate: MutableLiveData<String> = MutableLiveData<String>().apply {
         value = dateFormatter.format(LocalDateTime.now())
+    }
+
+    private fun createDateTimeFormatter(): DateTimeFormatter {
+        return DateTimeFormatterBuilder()
+            .appendPattern(DATE_FORMAT_PATTERN)
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+            .toFormatter(Locale.getDefault())
     }
 
     //TODO change all these source live data to rx observable
@@ -101,6 +110,19 @@ class CreatingSetViewModel(
             }
 
         }
+    }
+
+    fun updateCreatedDate(
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
+        createdDate.value =
+            dateFormatter.format(LocalDateTime.of(year, monthOfYear, dayOfMonth, 0, 0))
+    }
+
+    fun getCreatedDateAsLocalDateTime(): LocalDateTime {
+        return LocalDateTime.parse(createdDate.value, dateFormatter)
     }
 
     companion object {

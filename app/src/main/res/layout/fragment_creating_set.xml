@@ -10,6 +10,10 @@
         <variable
             name="viewModel"
             type="pl.mosenko.songplanner.features.creating_sets.CreatingSetViewModel" />
+
+        <variable
+            name="dateButtonListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,9 +39,8 @@
         <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/dateButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="48dp"
+            android:onClickListener="@{dateButtonListener}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateLabelTextView"
@@ -49,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:text="@{viewModel.createdDate}"
                 android:textAppearance="@android:style/TextAppearance"
                 tools:text="12 Marca 2019" />
@@ -61,6 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +75,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/creating_set_occasion_hint"
-                android:singleLine="true" />
+                android:singleLine="true">
+
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
 
