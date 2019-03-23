@@ -45,6 +45,11 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    implementation "com.jakewharton.threetenabp:threetenabp:$rootProject.threetenabpVersion"
+
+    //UI
+    implementation "com.balysv:material-ripple:$rootProject.materialRippleVersion"
+    implementation "com.wdullaer:materialdatetimepicker:$rootProject.materialDatePicker"
 
     //Android support
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"

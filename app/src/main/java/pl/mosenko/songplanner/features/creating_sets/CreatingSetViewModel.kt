@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatterBuilder
 import pl.mosenko.songplanner.core.adapter.DropDownItem
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMass
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
@@ -12,6 +14,7 @@ import pl.mosenko.songplanner.data.song.Song
 import pl.mosenko.songplanner.data.song.SongRepository
 import pl.mosenko.songplanner.data.songbook.Songbook
 import pl.mosenko.songplanner.data.songbook.SongbookRepository
+import java.util.*
 
 class CreatingSetViewModel(
     private val partOfMassRepository: PartOfMassRepository,
@@ -19,8 +22,14 @@ class CreatingSetViewModel(
     private val songbookRepository: SongbookRepository
 ) : ViewModel() {
 
+    private val dateFormatter = DateTimeFormatterBuilder()
+        .appendPattern(DATE_FORMAT_PATTERN)
+        .toFormatter(Locale.getDefault())
     val arePreinitializedRowsLoading: MutableLiveData<Boolean> = MutableLiveData()
     val lectionaryCycle: MutableLiveData<String> = MutableLiveData()
+    val createdDate: MutableLiveData<String> = MutableLiveData<String>().apply {
+        value = dateFormatter.format(LocalDateTime.now())
+    }
 
     //TODO change all these source live data to rx observable
     // divide it into single live data, which should be used in adapter
@@ -39,37 +48,37 @@ class CreatingSetViewModel(
                 val localSongs = songs
                 val localSongbooks = songbooks
                 if (localBasicPartOfMasses != null && localAllPartOfMasses != null
-                    && localSongs != null && localSongbooks != null) {
+                    && localSongs != null && localSongbooks != null
+                ) {
                     arePreinitializedRowsLoading.value = false
                     this.value =
-                            CreatingSetAdapterParams(
-                                localBasicPartOfMasses.mapIndexed { index, part ->
-                                    Row(
-                                        index.toLong(),
-                                        part
-                                    )
-                                },
-                                localAllPartOfMasses.map { part ->
-                                    DropDownItem(
-                                        part.partOfMassId!!,
-                                        part.partOfMassName,
-                                        part
-                                    )
-                                },
-                                localSongs.map { song ->
-                                    DropDownItem(
-                                        song.songId,
-                                        song.songName
-                                    )
-                                },
-                                localSongbooks.map {
-                                    songbook ->
-                                    DropDownItem(
-                                        songbook.songbookId,
-                                        songbook.songbookName
-                                    )
-                                }
-                            )
+                        CreatingSetAdapterParams(
+                            localBasicPartOfMasses.mapIndexed { index, part ->
+                                Row(
+                                    index.toLong(),
+                                    part
+                                )
+                            },
+                            localAllPartOfMasses.map { part ->
+                                DropDownItem(
+                                    part.partOfMassId!!,
+                                    part.partOfMassName,
+                                    part
+                                )
+                            },
+                            localSongs.map { song ->
+                                DropDownItem(
+                                    song.songId,
+                                    song.songName
+                                )
+                            },
+                            localSongbooks.map { songbook ->
+                                DropDownItem(
+                                    songbook.songbookId,
+                                    songbook.songbookName
+                                )
+                            }
+                        )
                 }
             }
 
@@ -92,5 +101,9 @@ class CreatingSetViewModel(
             }
 
         }
+    }
+
+    companion object {
+        const val DATE_FORMAT_PATTERN = "dd MMMM yyyy"
     }
 }

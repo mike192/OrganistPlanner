@@ -16,34 +16,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateInputLayout"
+        <TextView
+            android:id="@+id/dateLabelTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:singleLine="true"
+            android:text="@string/creating_set_date_hint"
+            android:textAppearance="@style/TextLabelStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dateEditText"
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/dateButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateLabelTextView"
+            app:mrl_rippleAlpha="@dimen/alpha_ripple"
+            app:mrl_rippleColor="@color/rippleColor">
+
+            <TextView
+                android:id="@+id/dateValueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/creating_set_date_hint"
-                android:inputType="date"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="start|center_vertical"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:text="@{viewModel.createdDate}"
+                android:textAppearance="@android:style/TextAppearance"
+                tools:text="12 Marca 2019" />
+        </com.balysv.materialripple.MaterialRippleLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/occasionInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/dateInputLayout"
-            app:layout_constraintStart_toStartOf="@+id/dateInputLayout"
-            app:layout_constraintTop_toBottomOf="@+id/dateInputLayout">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateButton">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/occasionEditText"

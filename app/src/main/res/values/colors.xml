@@ -13,4 +13,6 @@
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="white">#ffffff</color>
+    <color name="rippleColor">@color/primaryColor</color>
+
 </resources>

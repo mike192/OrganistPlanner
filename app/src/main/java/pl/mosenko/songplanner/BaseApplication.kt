@@ -1,6 +1,7 @@
 package pl.mosenko.songplanner
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.android.startKoin
 import pl.mosenko.songplanner.core.di.buildBaseModule
 import timber.log.Timber
@@ -13,6 +14,7 @@ class BaseApplication : Application() {
         super.onCreate()
         initializeTimber()
         startKoin(this, listOf(baseModule))
+        AndroidThreeTen.init(this)
     }
 
     private fun initializeTimber() {
