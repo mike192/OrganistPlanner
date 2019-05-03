@@ -2,6 +2,7 @@ package pl.mosenko.songplanner.features.creating_sets
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -15,7 +16,9 @@ import pl.mosenko.songplanner.databinding.FragmentCreatingSetBinding
 class CreatingSetOfSongsFragment : BaseFragment() {
 
     private val creatingSetViewModel: CreatingSetViewModel by viewModel()
+
     private lateinit var fragmentCreatingSetBinding: FragmentCreatingSetBinding
+    private var datePickerDialog: DatePickerDialog? = null
 
     //TODO fill in SetOfSongs object with two way data binding and view model
     //make data picker for date, autocomplete for occasion and --spinner-- for liturgical year
@@ -38,7 +41,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
 
     private fun setupLectionaryCyclesSpinner() {
         val lectionaryCycles = listOf(
-            *resources.getStringArray(pl.mosenko.songplanner.R.array.lectionary_cycles)
+            *resources.getStringArray(R.array.lectionary_cycles)
         )
         fragmentCreatingSetBinding.lectionaryCyclesSpinner.adapter =
             HintArrayAdapter<String>(context = context!!, objects = lectionaryCycles)
@@ -56,17 +59,31 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        observe(creatingSetViewModel.getCreatingSetAdapterParams()) { setupAdapter(it!!) }
+        observe(creatingSetViewModel.getCreatingSetAdapterParams()) { setupRowsAdapter(it!!) }
+        observe(creatingSetViewModel.getSetOfSongsNames()) { setupSetOfSetNamesAdapter(it!!) }
+
+        //TODO remove temporary added- for testing purpose
+//        observe(creatingSetViewModel.setOfSongName) {
+//            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+//        }
     }
 
-    private fun setupAdapter(creatingSetAdapterParams: CreatingSetAdapterParams) {
+    private fun setupSetOfSetNamesAdapter(setSongsNames: List<String>?) {
+        //TODO remove - temporary added
+        val listMock = listOf("XX Niedziela zwykła", "Ślub Marka i Ani", "Pogrzeb Bartka")
+
+        val arrayAdapter = ArrayAdapter(
+            context!!,
+            android.R.layout.simple_dropdown_item_1line,
+            listMock?.toMutableList() ?: emptyList()
+        )
+        fragmentCreatingSetBinding.setOfSongsNameEditText.setAdapter(arrayAdapter)
+    }
+
+    private fun setupRowsAdapter(creatingSetAdapterParams: CreatingSetAdapterParams) {
         fragmentCreatingSetBinding.rowRecyclerView.adapter =
-            CreatingSetAdapter(
-                creatingSetAdapterParams
-            )
+            CreatingSetAdapter(creatingSetAdapterParams)
     }
-
-    private var datePickerDialog: DatePickerDialog? = null
 
     private fun handleDateButtonClicked() {
         val createdDate = creatingSetViewModel.getCreatedDateAsLocalDateTime()
@@ -91,17 +108,16 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     }
 
     override fun onDestroy() {
+        datePickerDialog?.dismiss()
         super.onDestroy()
-        with(datePickerDialog) { this?.dismiss() }
     }
 
     private fun setupRecyclerView() {
         fragmentCreatingSetBinding.rowRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(pl.mosenko.songplanner.R.menu.menu_creating_set, menu)
+        inflater?.inflate(R.menu.menu_creating_set, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

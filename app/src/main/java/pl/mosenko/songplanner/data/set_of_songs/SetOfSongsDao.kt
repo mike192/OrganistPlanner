@@ -12,7 +12,10 @@ import pl.mosenko.songplanner.features.planned_songs.PlannedSetOfSongs
 @Dao
 interface SetOfSongsDao : BaseDao<SetOfSongs> {
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE")
-    fun getSetSetOfSongs(): LiveData<List<SetOfSongs>>
+    fun getListSetOfSongs(): LiveData<List<SetOfSongs>>
+
+    @Query("SELECT DISTINCT $SET_OF_SONGS_NAME_COLUMN FROM $SET_OF_SONGS_TABLE")
+    fun getSetOfSongsNames(): LiveData<List<String>?>
 
     @Transaction
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE where $CREATED_DATE_COLUMN >= datetime()")

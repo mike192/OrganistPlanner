@@ -12,6 +12,7 @@ import pl.mosenko.songplanner.core.adapter.DropDownItem
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMass
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.row.Row
+import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsRepository
 import pl.mosenko.songplanner.data.song.Song
 import pl.mosenko.songplanner.data.song.SongRepository
 import pl.mosenko.songplanner.data.songbook.Songbook
@@ -21,7 +22,8 @@ import java.util.*
 class CreatingSetViewModel(
     private val partOfMassRepository: PartOfMassRepository,
     private val songRepository: SongRepository,
-    private val songbookRepository: SongbookRepository
+    private val songbookRepository: SongbookRepository,
+    private val setOfSongsRepository: SetOfSongsRepository
 ) : ViewModel() {
 
     private val dateFormatter = createDateTimeFormatter()
@@ -30,6 +32,7 @@ class CreatingSetViewModel(
     val createdDate: MutableLiveData<String> = MutableLiveData<String>().apply {
         value = dateFormatter.format(LocalDateTime.now())
     }
+    val setOfSongName: MutableLiveData<String> = MutableLiveData()
 
     private fun createDateTimeFormatter(): DateTimeFormatter {
         return DateTimeFormatterBuilder()
@@ -39,6 +42,8 @@ class CreatingSetViewModel(
             .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
             .toFormatter(Locale.getDefault())
     }
+
+    fun getSetOfSongsNames(): LiveData<List<String>?> = setOfSongsRepository.getSetOfSongsNames()
 
     //TODO change all these source live data to rx observable
     // divide it into single live data, which should be used in adapter
@@ -126,6 +131,6 @@ class CreatingSetViewModel(
     }
 
     companion object {
-        const val DATE_FORMAT_PATTERN = "dd MMMM yyyy"
+        const val DATE_FORMAT_PATTERN = "d MMMM yyyy"
     }
 }

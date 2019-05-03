@@ -3,7 +3,7 @@ package pl.mosenko.songplanner.core.adapter
 import java.io.Serializable
 
 data class DropDownItem<out KEY, out VALUE>(
-    open val key: KEY,
+    val key: KEY,
     val value: VALUE,
     val originalObject: Any? = null
 ) : Serializable {

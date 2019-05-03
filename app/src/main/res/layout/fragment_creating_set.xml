@@ -60,7 +60,7 @@
         </com.balysv.materialripple.MaterialRippleLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/occasionInputLayout"
+            android:id="@+id/setOfSongsNameInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -70,15 +70,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateButton">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/occasionEditText"
+            <AutoCompleteTextView
+                android:id="@+id/setOfSongsNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/creating_set_occasion_hint"
-                android:singleLine="true">
+                android:hint="@string/creating_set_of_songs_name_hint"
+                android:singleLine="true"
+                android:text="@={viewModel.setOfSongName}">
 
                 <requestFocus />
-            </com.google.android.material.textfield.TextInputEditText>
+            </AutoCompleteTextView>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +90,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/authorInputLayout"
             app:layout_constraintEnd_toStartOf="@+id/authorInputLayout"
-            app:layout_constraintStart_toStartOf="@+id/occasionInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/setOfSongsNameInputLayout"
             app:layout_constraintTop_toTopOf="@+id/authorInputLayout"
             app:layout_constraintWidth_percent="0.3"
             app:selectedValue="@={viewModel.lectionaryCycle}"
@@ -100,9 +101,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="@+id/occasionInputLayout"
+            app:layout_constraintEnd_toEndOf="@+id/setOfSongsNameInputLayout"
             app:layout_constraintStart_toEndOf="@+id/lectionaryCyclesSpinner"
-            app:layout_constraintTop_toBottomOf="@+id/occasionInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/setOfSongsNameInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/authorEditText"

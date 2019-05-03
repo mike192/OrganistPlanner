@@ -1,6 +1,5 @@
 package pl.mosenko.songplanner.features.creating_sets
 
-import android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,31 +23,26 @@ class CreatingSetAdapter(
     private val partOfMassAdapter: DropDownArrayAdapter<Long, String>
         get() = DropDownArrayAdapter(
             recyclerView.context,
-            R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_dropdown_item_1line,
             creatingSetAdapterParams.allPartOfMasses
         )
 
     private val songAdapter: DropDownArrayAdapter<Long, String>
         get() = DropDownArrayAdapter(
             recyclerView.context,
-            R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_dropdown_item_1line,
             creatingSetAdapterParams.allSongs
         )
 
     private val songbookAdapter: DropDownArrayAdapter<Long, String>
         get() = DropDownArrayAdapter(
             recyclerView.context,
-            R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_dropdown_item_1line,
             creatingSetAdapterParams.allSongbooks
         )
 
     var viewHolderRowList: MutableList<ViewHolderRow> = creatingSetAdapterParams.preinitializedRows
-        .map {
-            ViewHolderRow(
-                ObservableBoolean(false),
-                it
-            )
-        }
+        .map { ViewHolderRow(ObservableBoolean(false), it) }
         .toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -95,14 +89,13 @@ class CreatingSetAdapter(
                     viewHolderRow.row.songbookSong!!.song = Song(text)
                 }
                 songbookInput.setDropDownArrayAdapter(songbookAdapter)
-                songbookInput.addAfterTextChangedListener {
-                    text ->
+                songbookInput.addAfterTextChangedListener { text ->
                     viewHolderRow.row.songbookSong!!.songbook = Songbook(text)
                 }
-                versesNumbersInput.addAfterTextChangedListener {text ->
+                versesNumbersInput.addAfterTextChangedListener { text ->
                     viewHolderRow.row.versesNumbers = text
                 }
-                numberInSongbookInput.addAfterTextChangedListener {text ->
+                numberInSongbookInput.addAfterTextChangedListener { text ->
                     viewHolderRow.row.songbookSong!!.numberInSongbook = text
                 }
                 isExtendedViewVisible = viewHolderRow.isExtendedViewVisible

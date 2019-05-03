@@ -1,10 +1,6 @@
 package pl.mosenko.songplanner.core.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.context.ModuleDefinition
@@ -12,7 +8,6 @@ import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 import pl.mosenko.songplanner.core.db.AppDatabase
 import pl.mosenko.songplanner.core.db.DB_NAME
-import pl.mosenko.songplanner.core.utils.PartOfMassDbPopulator
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassDataSource
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsDataSource
@@ -42,7 +37,7 @@ fun buildBaseModule(): Module {
         single { SongDataSource(get()) as SongRepository }
         single { SongbookSongDataSource(get()) as SongbookSongRepository }
         single { SongbookDataSource(get()) as SongbookRepository }
-        viewModel { CreatingSetViewModel(get(), get(), get()) }
+        viewModel { CreatingSetViewModel(get(), get(), get(), get()) }
         viewModel { PlannedSongsViewModel(get()) }
     }
 }

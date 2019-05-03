@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
-class HintArrayAdapter<T> : ArrayAdapter<T> {
-
-    constructor(
-        context: Context, @LayoutRes resource: Int = android.R.layout.simple_dropdown_item_1line,
-        @IdRes textViewResourceId: Int = 0, objects: List<T> = ArrayList()
-    ) : super(context, resource, textViewResourceId, objects)
+class HintArrayAdapter<T>(
+    context: Context,
+    @LayoutRes resource: Int = android.R.layout.simple_dropdown_item_1line,
+    @IdRes textViewResourceId: Int = 0,
+    objects: List<T> = ArrayList()
+) : ArrayAdapter<T>(context, resource, textViewResourceId, objects) {
 
     override fun isEnabled(position: Int) = position != FIRST_POSITION_INDEX
 

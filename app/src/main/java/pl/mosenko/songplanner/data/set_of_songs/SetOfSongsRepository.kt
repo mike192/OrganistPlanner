@@ -8,6 +8,8 @@ import pl.mosenko.songplanner.features.planned_songs.PlannedSetOfSongs
 interface SetOfSongsRepository : BaseRepository<SetOfSongs> {
     fun getSetSetOfSongs(): LiveData<List<SetOfSongs>>
 
+    fun getSetOfSongsNames(): LiveData<List<String>?>
+
     fun getPlannedSetSetOfSongs(): LiveData<List<PlannedSetOfSongs>>
 
     fun getSetOfSongsById(setOfSongsId: Int): LiveData<SetOfSongs>

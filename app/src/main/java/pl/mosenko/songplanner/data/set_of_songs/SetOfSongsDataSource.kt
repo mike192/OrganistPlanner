@@ -6,8 +6,9 @@ import pl.mosenko.songplanner.features.planned_songs.PlannedSetOfSongs
 
 class SetOfSongsDataSource(private val setOfSongsDao: SetOfSongsDao) :
     SetOfSongsRepository {
+    override fun getSetOfSongsNames(): LiveData<List<String>?> = setOfSongsDao.getSetOfSongsNames()
 
-    override fun getSetSetOfSongs(): LiveData<List<SetOfSongs>> = setOfSongsDao.getSetSetOfSongs()
+    override fun getSetSetOfSongs(): LiveData<List<SetOfSongs>> = setOfSongsDao.getListSetOfSongs()
 
     override fun getPlannedSetSetOfSongs(): LiveData<List<PlannedSetOfSongs>> =
         setOfSongsDao.getPlannedSetSetOfSongs()

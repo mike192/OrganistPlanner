@@ -7,7 +7,7 @@ import java.lang.ref.WeakReference
 
 open class BaseFragment : Fragment() {
     private var _drawerManager: WeakReference<DrawerManager?>? = null
-    var drawerManager: DrawerManager?
+    private var drawerManager: DrawerManager?
         get() = _drawerManager?.get()
         set(value) {
             _drawerManager = WeakReference(value)

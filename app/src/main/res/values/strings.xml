@@ -19,7 +19,7 @@
 
     <string name="creating_set_save">ZAPISZ</string>
     <string name="creating_set_date_hint">Data</string>
-    <string name="creating_set_occasion_hint">Okoliczność</string>
+    <string name="creating_set_of_songs_name_hint">Okoliczność</string>
     <string name="creating_set_author" tools:ignore="Typos">Autor</string>
     <string name="creating_set_part_of_mass">Część Mszy Św.</string>
     <string name="creating_set_song">Śpiew/Utwór</string>
