@@ -1,5 +1,6 @@
 package pl.mosenko.songplanner.features.creating_sets
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,43 +17,42 @@ import pl.mosenko.songplanner.data.songbook.Songbook
 import pl.mosenko.songplanner.databinding.CreatingRowItemBinding
 
 class CreatingSetAdapter(
-    private val creatingSetAdapterParams: CreatingSetAdapterParams
+    context: Context,
+    creatingSetAdapterParams: CreatingSetAdapterParams
 ) : RecyclerView.Adapter<CreatingSetAdapter.ViewHolder>() {
 
     private lateinit var recyclerView: RecyclerView
-    private val partOfMassAdapter: DropDownArrayAdapter<Long, String>
-        get() = DropDownArrayAdapter(
-            recyclerView.context,
-            android.R.layout.simple_dropdown_item_1line,
-            creatingSetAdapterParams.allPartOfMasses
-        )
+    private val partOfMassAdapter = DropDownArrayAdapter(
+        context,
+        android.R.layout.simple_dropdown_item_1line,
+        creatingSetAdapterParams.allPartOfMasses
+    )
 
-    private val songAdapter: DropDownArrayAdapter<Long, String>
-        get() = DropDownArrayAdapter(
-            recyclerView.context,
-            android.R.layout.simple_dropdown_item_1line,
-            creatingSetAdapterParams.allSongs
-        )
+    private val songAdapter = DropDownArrayAdapter(
+        context,
+        android.R.layout.simple_dropdown_item_1line,
+        creatingSetAdapterParams.allSongs
+    )
 
-    private val songbookAdapter: DropDownArrayAdapter<Long, String>
-        get() = DropDownArrayAdapter(
-            recyclerView.context,
-            android.R.layout.simple_dropdown_item_1line,
-            creatingSetAdapterParams.allSongbooks
-        )
+    private val songbookAdapter = DropDownArrayAdapter(
+        context,
+        android.R.layout.simple_dropdown_item_1line,
+        creatingSetAdapterParams.allSongbooks
+    )
 
-    var viewHolderRowList: MutableList<ViewHolderRow> = creatingSetAdapterParams.preinitializedRows
-        .map { ViewHolderRow(ObservableBoolean(false), it) }
-        .toMutableList()
+    private var viewHolderRowList: MutableList<ViewHolderRow> =
+        creatingSetAdapterParams.preInitializedRows
+            .map { ViewHolderRow(ObservableBoolean(false), it) }
+            .toMutableList()
+
+    fun getRowList(): List<Row> = viewHolderRowList.map { it.row }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewHolder = ViewHolder(
-            CreatingRowItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        ).apply {
-            setIsRecyclable(false)
-        }
+        val binding = CreatingRowItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        val viewHolder = ViewHolder(binding)
+        viewHolder.setIsRecyclable(false)
         return viewHolder
     }
 
@@ -102,9 +102,9 @@ class CreatingSetAdapter(
             }
         }
 
-        fun onExpandClickListener(viewHolderRow: ViewHolderRow) {
+        private fun onExpandClickListener(viewHolderRow: ViewHolderRow) {
             viewHolderRow.isExtendedViewVisible.set(!viewHolderRow.isExtendedViewVisible.get())
-            TransitionManager.beginDelayedTransition(recyclerView) //TODO add temporary replace by transition animation
+            TransitionManager.beginDelayedTransition(recyclerView)
             notifyDataSetChanged()
         }
     }
@@ -112,9 +112,9 @@ class CreatingSetAdapter(
 
 data class ViewHolderRow(var isExtendedViewVisible: ObservableBoolean, val row: Row)
 
-data class CreatingSetAdapterParams(
-    val preinitializedRows: List<Row>,
-    val allPartOfMasses: List<DropDownItem<Long, String>>,
-    val allSongs: List<DropDownItem<Long, String>>,
-    val allSongbooks: List<DropDownItem<Long, String>>
+class CreatingSetAdapterParams(
+    var preInitializedRows: List<Row> = emptyList(),
+    var allPartOfMasses: List<DropDownItem<Long, String>> = emptyList(),
+    var allSongs: List<DropDownItem<Long, String>> = emptyList(),
+    var allSongbooks: List<DropDownItem<Long, String>> = emptyList()
 )

@@ -7,9 +7,9 @@ class SongDataSource(private val songDao: SongDao) : SongRepository {
 
     override fun getSongs() = songDao.getSongs()
 
-    override fun insert(entity: Song) =
+    override fun insert(entity: Song): Single<Long> =
         Single.fromCallable { songDao.insert(entity) }
 
-    override fun delete(entity: Song) =
+    override fun delete(entity: Song): Single<Int> =
         Single.fromCallable { songDao.delete(entity) }
 }

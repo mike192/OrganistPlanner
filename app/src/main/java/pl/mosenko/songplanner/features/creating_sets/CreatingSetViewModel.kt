@@ -1,22 +1,23 @@
 package pl.mosenko.songplanner.features.creating_sets
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Flowable
+import io.reactivex.schedulers.Schedulers
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatterBuilder
 import org.threeten.bp.temporal.ChronoField
 import pl.mosenko.songplanner.core.adapter.DropDownItem
-import pl.mosenko.songplanner.data.part_of_mass.PartOfMass
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.row.Row
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsRepository
-import pl.mosenko.songplanner.data.song.Song
 import pl.mosenko.songplanner.data.song.SongRepository
-import pl.mosenko.songplanner.data.songbook.Songbook
 import pl.mosenko.songplanner.data.songbook.SongbookRepository
+import timber.log.Timber
 import java.util.*
 
 class CreatingSetViewModel(
@@ -27,8 +28,9 @@ class CreatingSetViewModel(
 ) : ViewModel() {
 
     private val dateFormatter = createDateTimeFormatter()
-    val arePreinitializedRowsLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val areAdapterParamsLoading: MutableLiveData<Boolean> = MutableLiveData()
     val lectionaryCycle: MutableLiveData<String> = MutableLiveData()
+    val author: MutableLiveData<String> = MutableLiveData() //TODO(11) to fill, using Google Account depending on settings
     val createdDate: MutableLiveData<String> = MutableLiveData<String>().apply {
         value = dateFormatter.format(LocalDateTime.now())
     }
@@ -43,79 +45,37 @@ class CreatingSetViewModel(
             .toFormatter(Locale.getDefault())
     }
 
-    fun getSetOfSongsNames(): LiveData<List<String>?> = setOfSongsRepository.getSetOfSongsNames()
-
-    //TODO change all these source live data to rx observable
-    // divide it into single live data, which should be used in adapter
-    // but fetch at the same moment
+    //TODO(10) - add proper animation during extending item
+    // add draggable option
+    // add removing option
     fun getCreatingSetAdapterParams(): LiveData<CreatingSetAdapterParams> {
-        arePreinitializedRowsLoading.value = true
-        return MediatorLiveData<CreatingSetAdapterParams>().apply {
-            var basicPartOfMasses: List<PartOfMass>? = null
-            var allPartOfMasses: List<PartOfMass>? = null
-            var songs: List<Song>? = null
-            var songbooks: List<Songbook>? = null
-
-            fun update() {
-                val localBasicPartOfMasses = basicPartOfMasses
-                val localAllPartOfMasses = allPartOfMasses
-                val localSongs = songs
-                val localSongbooks = songbooks
-                if (localBasicPartOfMasses != null && localAllPartOfMasses != null
-                    && localSongs != null && localSongbooks != null
-                ) {
-                    arePreinitializedRowsLoading.value = false
-                    this.value =
-                        CreatingSetAdapterParams(
-                            localBasicPartOfMasses.mapIndexed { index, part ->
-                                Row(
-                                    index.toLong(),
-                                    part
-                                )
-                            },
-                            localAllPartOfMasses.map { part ->
-                                DropDownItem(
-                                    part.partOfMassId!!,
-                                    part.partOfMassName,
-                                    part
-                                )
-                            },
-                            localSongs.map { song ->
-                                DropDownItem(
-                                    song.songId,
-                                    song.songName
-                                )
-                            },
-                            localSongbooks.map { songbook ->
-                                DropDownItem(
-                                    songbook.songbookId,
-                                    songbook.songbookName
-                                )
-                            }
-                        )
-                }
-            }
-
-            addSource(partOfMassRepository.getBasicPartOfMasses()) {
-                basicPartOfMasses = it
-                update()
-            }
-
-            addSource(partOfMassRepository.getPartOfMasses()) {
-                allPartOfMasses = it
-                update()
-            }
-            addSource(songRepository.getSongs()) {
-                songs = it
-                update()
-            }
-            addSource(songbookRepository.getSongbooks()) {
-                songbooks = it
-                update()
-            }
-
-        }
+        val paramsFlowable = Flowable.fromCallable { CreatingSetAdapterParams() }
+            .parallel(4)
+            .runOn(Schedulers.io())
+            .map { params ->
+                params.preInitializedRows = partOfMassRepository.getBasicPartOfMasses()
+                    .blockingFirst()
+                    .mapIndexed { index, partOfMass -> Row(index.toLong(), partOfMass) }
+                params
+            }.map { params ->
+                params.allPartOfMasses = partOfMassRepository.getPartOfMasses().blockingFirst()
+                    .map { DropDownItem(it.partOfMassId!!, it.partOfMassName, it) }
+                params
+            }.map { params ->
+                params.allSongs = songRepository.getSongs().blockingFirst()
+                    .map { DropDownItem(it.songId, it.songName) }
+                params
+            }.map { params ->
+                params.allSongbooks = songbookRepository.getSongbooks().blockingFirst()
+                    .map { DropDownItem(it.songbookId, it.songbookName) }
+                params
+            }.sequential()
+            .doOnSubscribe { areAdapterParamsLoading.postValue(true) }
+            .doFinally { areAdapterParamsLoading.postValue(false) }
+        return LiveDataReactiveStreams.fromPublisher(paramsFlowable)
     }
+
+    fun getSetOfSongsNames(): LiveData<List<String>?> = setOfSongsRepository.getSetOfSongsNames()
 
     fun updateCreatedDate(
         year: Int,
@@ -126,8 +86,14 @@ class CreatingSetViewModel(
             dateFormatter.format(LocalDateTime.of(year, monthOfYear, dayOfMonth, 0, 0))
     }
 
-    fun getCreatedDateAsLocalDateTime(): LocalDateTime {
-        return LocalDateTime.parse(createdDate.value, dateFormatter)
+    fun getCreatedDateAsLocalDateTime(): LocalDateTime =
+        LocalDateTime.parse(createdDate.value, dateFormatter)
+
+
+    //TODO(1) think how to save all data!!!
+    fun saveSetOfSongs(rowList: List<Row>) {
+        Timber.d(rowList.toString())
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

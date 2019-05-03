@@ -29,7 +29,7 @@ class PlannedSongsFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        //TODO to replace after adding appropriate recyclerView
+        //TODO(2) to replace after adding appropriate recyclerView
         observe(plannedSongsViewModel.getPlannedSetSetOfSongs()) { plannedSongs ->
             if (plannedSongs != null && !plannedSongs.isEmpty()) {
                 fragmentPlannedSongsBinding.testPlannedSongs.text =

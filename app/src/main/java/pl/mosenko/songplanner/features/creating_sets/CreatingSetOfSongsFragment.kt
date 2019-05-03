@@ -18,6 +18,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     private val creatingSetViewModel: CreatingSetViewModel by viewModel()
 
     private lateinit var fragmentCreatingSetBinding: FragmentCreatingSetBinding
+    private lateinit var adapter: CreatingSetAdapter
     private var datePickerDialog: DatePickerDialog? = null
 
     //TODO fill in SetOfSongs object with two way data binding and view model
@@ -81,8 +82,9 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     }
 
     private fun setupRowsAdapter(creatingSetAdapterParams: CreatingSetAdapterParams) {
+        adapter = CreatingSetAdapter(context!!, creatingSetAdapterParams)
         fragmentCreatingSetBinding.rowRecyclerView.adapter =
-            CreatingSetAdapter(creatingSetAdapterParams)
+            adapter
     }
 
     private fun handleDateButtonClicked() {
@@ -116,8 +118,14 @@ class CreatingSetOfSongsFragment : BaseFragment() {
         fragmentCreatingSetBinding.rowRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
+    //TODO block menu item if data invalid
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_creating_set, menu)
+        val saveMenuItem = menu?.findItem(R.id.saveMenuItem)
+        saveMenuItem?.setOnMenuItemClickListener {
+            creatingSetViewModel.saveSetOfSongs(adapter.getRowList())
+            true
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 

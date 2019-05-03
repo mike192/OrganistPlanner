@@ -3,6 +3,7 @@ package pl.mosenko.songplanner.data.songbook
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
+import io.reactivex.Flowable
 import pl.mosenko.songplanner.core.db.BaseDao
 import pl.mosenko.songplanner.core.db.COLUMN_ID
 
@@ -12,5 +13,5 @@ interface SongbookDao : BaseDao<Songbook> {
     fun getSongbookById(songbookId: Long): LiveData<Songbook>
 
     @Query("select * from $SONGBOOK_TABLE")
-    fun getSongbooks() : LiveData<List<Songbook>>
+    fun getSongbooks() : Flowable<List<Songbook>>
 }

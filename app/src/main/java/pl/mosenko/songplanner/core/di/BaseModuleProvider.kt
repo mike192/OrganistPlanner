@@ -1,6 +1,10 @@
 package pl.mosenko.songplanner.core.di
 
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.context.ModuleDefinition
@@ -8,6 +12,7 @@ import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 import pl.mosenko.songplanner.core.db.AppDatabase
 import pl.mosenko.songplanner.core.db.DB_NAME
+import pl.mosenko.songplanner.core.utils.PartOfMassDbPopulator
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassDataSource
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsDataSource
@@ -23,9 +28,7 @@ import pl.mosenko.songplanner.features.planned_songs.PlannedSongsViewModel
 
 fun buildBaseModule(): Module {
     return module {
-        single {
-            getAppDatabase()
-        }
+        single { getAppDatabase() }
         single { get<AppDatabase>().getPartOfMassDao() }
         single { get<AppDatabase>().getRowDao() }
         single { get<AppDatabase>().getSetOfSongsDao() }
@@ -48,14 +51,14 @@ private fun ModuleDefinition.getAppDatabase(): AppDatabase {
         AppDatabase::class.java,
         DB_NAME
     )//TODO uncomment after increase version of WorkManager API
-//        .addCallback(object : RoomDatabase.Callback() {
-//            override fun onCreate(db: SupportSQLiteDatabase) {
-//                super.onCreate(db)
-//                val populatorRequest =
-//                    OneTimeWorkRequestBuilder<PartOfMassDbPopulator>().build()
-//                WorkManager.getInstance().enqueue(populatorRequest)
-//            }
-//        })
+        .addCallback(object : RoomDatabase.Callback() {
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                val populatorRequest =
+                    OneTimeWorkRequestBuilder<PartOfMassDbPopulator>().build()
+                WorkManager.getInstance().enqueue(populatorRequest)
+            }
+        })
         .fallbackToDestructiveMigration() // TODO(to remove) only for testing purpose
         .build()
 }

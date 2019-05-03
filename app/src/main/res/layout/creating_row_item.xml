@@ -41,7 +41,8 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_drag_vertical" />
+                app:srcCompat="@drawable/ic_drag_vertical"
+                tools:ignore="ContentDescription" />
         </FrameLayout>
 
         <com.google.android.material.textfield.TextInputLayout

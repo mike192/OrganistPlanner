@@ -6,10 +6,9 @@ import io.reactivex.Single
 class PartOfMassDataSource(private val partOfMassDao: PartOfMassDao) :
     PartOfMassRepository {
 
-    override fun getPartOfMasses(): LiveData<List<PartOfMass>> = partOfMassDao.getPartOfMasses()
+    override fun getPartOfMasses() = partOfMassDao.getPartOfMasses()
 
-    override fun getBasicPartOfMasses(): LiveData<List<PartOfMass>> =
-        partOfMassDao.getBasicPartOfMasses()
+    override fun getBasicPartOfMasses() = partOfMassDao.getBasicPartOfMasses()
 
     override fun getPartOfMassById(partOfMassId: Long): LiveData<PartOfMass> =
         partOfMassDao.getPartOfMassById(partOfMassId)

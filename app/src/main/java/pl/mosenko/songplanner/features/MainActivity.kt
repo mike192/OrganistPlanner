@@ -45,9 +45,7 @@ class MainActivity : AppCompatActivity(), DrawerManager {
         drawerLayout.removeDrawerListener(drawerListener)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(drawerLayout, navigationController)
-    }
+    override fun onSupportNavigateUp() = NavigationUI.navigateUp(navigationController, drawerLayout)
 
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
