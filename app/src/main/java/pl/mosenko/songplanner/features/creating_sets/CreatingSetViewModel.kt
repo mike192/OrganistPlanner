@@ -1,11 +1,9 @@
 package pl.mosenko.songplanner.features.creating_sets
 
-import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -14,7 +12,9 @@ import org.threeten.bp.temporal.ChronoField
 import pl.mosenko.songplanner.core.adapter.DropDownItem
 import pl.mosenko.songplanner.data.part_of_mass.PartOfMassRepository
 import pl.mosenko.songplanner.data.row.Row
+import pl.mosenko.songplanner.data.set_of_songs.SetOfSongs
 import pl.mosenko.songplanner.data.set_of_songs.SetOfSongsRepository
+import pl.mosenko.songplanner.data.set_of_songs_creator.SetOfSongsCreatorRepository
 import pl.mosenko.songplanner.data.song.SongRepository
 import pl.mosenko.songplanner.data.songbook.SongbookRepository
 import timber.log.Timber
@@ -24,16 +24,21 @@ class CreatingSetViewModel(
     private val partOfMassRepository: PartOfMassRepository,
     private val songRepository: SongRepository,
     private val songbookRepository: SongbookRepository,
-    private val setOfSongsRepository: SetOfSongsRepository
+    private val setOfSongsRepository: SetOfSongsRepository,
+    private val setOfSongsCreatorRepository: SetOfSongsCreatorRepository
 ) : ViewModel() {
 
+    private var insertSetDisposable: Disposable? = null
     private val dateFormatter = createDateTimeFormatter()
     val areAdapterParamsLoading: MutableLiveData<Boolean> = MutableLiveData()
     val lectionaryCycle: MutableLiveData<String> = MutableLiveData()
-    val author: MutableLiveData<String> = MutableLiveData() //TODO(11) to fill, using Google Account depending on settings
-    val createdDate: MutableLiveData<String> = MutableLiveData<String>().apply {
-        value = dateFormatter.format(LocalDateTime.now())
+    val author: MutableLiveData<String> =
+        MutableLiveData() //TODO(11) to fill, using Google Account depending on settings
+    var createdDate: MutableLiveData<LocalDateTime> = MutableLiveData<LocalDateTime>().apply {
+        value = LocalDateTime.now()
     }
+    val formattedCreatedDate: LiveData<String> =
+        Transformations.map(createdDate) { dateFormatter.format(it) }
     val setOfSongName: MutableLiveData<String> = MutableLiveData()
 
     private fun createDateTimeFormatter(): DateTimeFormatter {
@@ -82,18 +87,32 @@ class CreatingSetViewModel(
         monthOfYear: Int,
         dayOfMonth: Int
     ) {
-        createdDate.value =
-            dateFormatter.format(LocalDateTime.of(year, monthOfYear, dayOfMonth, 0, 0))
+        createdDate.value = LocalDateTime.of(year, monthOfYear, dayOfMonth, 0, 0)
     }
 
-    fun getCreatedDateAsLocalDateTime(): LocalDateTime =
-        LocalDateTime.parse(createdDate.value, dateFormatter)
+    fun saveSetOfSongs(rowList: List<Row>): LiveData<Boolean> {
+        val insertSuccessLiveData = MutableLiveData<Boolean>()
+        val setOfSongs = SetOfSongs(
+            author = author.value,
+            createdDate = createdDate.value!!,
+            lectionaryCycle = lectionaryCycle.value!!,
+            setOfSongsName = setOfSongName.value!!
+        )
+        insertSetDisposable =
+            setOfSongsCreatorRepository.insertCompleteSetOfSongs(setOfSongs, rowList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ insertSuccessLiveData.value = true },
+                    {
+                        Timber.e(it, "Some error ocurred durgin saving set of songs")
+                        insertSuccessLiveData.value = false
+                    })
 
+        return insertSuccessLiveData
+    }
 
-    //TODO(1) think how to save all data!!!
-    fun saveSetOfSongs(rowList: List<Row>) {
-        Timber.d(rowList.toString())
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onCleared() {
+        insertSetDisposable?.dispose()
     }
 
     companion object {

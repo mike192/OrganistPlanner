@@ -11,6 +11,7 @@ import pl.mosenko.songplanner.features.planned_songs.PlannedSetOfSongs
 
 @Dao
 interface SetOfSongsDao : BaseDao<SetOfSongs> {
+
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE")
     fun getListSetOfSongs(): LiveData<List<SetOfSongs>>
 
@@ -18,7 +19,7 @@ interface SetOfSongsDao : BaseDao<SetOfSongs> {
     fun getSetOfSongsNames(): LiveData<List<String>?>
 
     @Transaction
-    @Query("SELECT * FROM $SET_OF_SONGS_TABLE where $CREATED_DATE_COLUMN >= datetime()")
+    @Query("SELECT * FROM $SET_OF_SONGS_TABLE") /* where $CREATED_DATE_COLUMN >= date()*/
     fun getPlannedSetSetOfSongs(): LiveData<List<PlannedSetOfSongs>>
 
     @Query("SELECT * FROM $SET_OF_SONGS_TABLE WHERE $COLUMN_ID = :setOfSongsId")

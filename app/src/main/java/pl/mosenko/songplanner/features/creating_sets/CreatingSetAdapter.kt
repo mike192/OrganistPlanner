@@ -52,7 +52,7 @@ class CreatingSetAdapter(
             LayoutInflater.from(parent.context), parent, false
         )
         val viewHolder = ViewHolder(binding)
-        viewHolder.setIsRecyclable(false)
+     //   viewHolder.setIsRecyclable(false)
         return viewHolder
     }
 
@@ -76,8 +76,19 @@ class CreatingSetAdapter(
             creatingRowItemBinding.apply {
                 row = viewHolderRow.row
                 onExpandListener =
-                    View.OnClickListener { onExpandClickListener(viewHolderRow) }
+                    View.OnClickListener {
+                        onExpandClickListener(viewHolderRow)
+                        notifyItemChanged(position)
+                        creatingRowItemBinding.executePendingBindings()
+                    }
                 partOfMassInput.setDropDownArrayAdapter(partOfMassAdapter)
+                basicSongInput.setDropDownArrayAdapter(songAdapter)
+                basicSongInput.addAfterTextChangedListener { text ->
+                    if (viewHolderRow.row.songbookSong!!.song?.songName != text) {
+                        viewHolderRow.row.songbookSong!!.song = Song(text)
+                        executePendingBindings()
+                    }
+                }
                 songInput.setDropDownArrayAdapter(songAdapter)
                 songInput.onItemClickListener =
                         //TODO load lists for songbook, etc
@@ -86,7 +97,9 @@ class CreatingSetAdapter(
                             songInput.getCurrentlySelectedObject().originalObject as Song
                     }
                 songInput.addAfterTextChangedListener { text ->
-                    viewHolderRow.row.songbookSong!!.song = Song(text)
+                    if (viewHolderRow.row.songbookSong!!.song?.songName != text) {
+                        viewHolderRow.row.songbookSong!!.song = Song(text)
+                    }
                 }
                 songbookInput.setDropDownArrayAdapter(songbookAdapter)
                 songbookInput.addAfterTextChangedListener { text ->
@@ -104,8 +117,7 @@ class CreatingSetAdapter(
 
         private fun onExpandClickListener(viewHolderRow: ViewHolderRow) {
             viewHolderRow.isExtendedViewVisible.set(!viewHolderRow.isExtendedViewVisible.get())
-            TransitionManager.beginDelayedTransition(recyclerView)
-            notifyDataSetChanged()
+           // TransitionManager.beginDelayedTransition(recyclerView)
         }
     }
 }

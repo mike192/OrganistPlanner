@@ -3,6 +3,8 @@ package pl.mosenko.songplanner.features.creating_sets
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -88,7 +90,7 @@ class CreatingSetOfSongsFragment : BaseFragment() {
     }
 
     private fun handleDateButtonClicked() {
-        val createdDate = creatingSetViewModel.getCreatedDateAsLocalDateTime()
+        val createdDate = creatingSetViewModel.createdDate.value!!
         datePickerDialog = DatePickerDialog.newInstance(
             { _, year, monthOfYear, dayOfMonth ->
                 creatingSetViewModel.updateCreatedDate(
@@ -116,14 +118,23 @@ class CreatingSetOfSongsFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         fragmentCreatingSetBinding.rowRecyclerView.layoutManager = LinearLayoutManager(context)
+        fragmentCreatingSetBinding.rowRecyclerView.setHasFixedSize(true)
     }
 
     //TODO block menu item if data invalid
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_creating_set, menu)
         val saveMenuItem = menu?.findItem(R.id.saveMenuItem)
+
         saveMenuItem?.setOnMenuItemClickListener {
-            creatingSetViewModel.saveSetOfSongs(adapter.getRowList())
+            //TODO add trigger, and handle it with progress view
+            observe(creatingSetViewModel.saveSetOfSongs(adapter.getRowList())) {
+                if (it == true) {
+                    view?.findNavController()?.navigateUp()
+                } else {
+                    Toast.makeText(context!!, "Zapis nie powiódł się", Toast.LENGTH_SHORT).show()
+                }
+            }
             true
         }
         super.onCreateOptionsMenu(menu, inflater)

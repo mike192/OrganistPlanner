@@ -54,7 +54,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@{viewModel.createdDate}"
+                android:text="@{viewModel.formattedCreatedDate}"
                 android:textAppearance="@android:style/TextAppearance"
                 tools:text="12 Marca 2019" />
         </com.balysv.materialripple.MaterialRippleLayout>
@@ -110,7 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/creating_set_author"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="@={viewModel.author}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

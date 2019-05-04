@@ -20,6 +20,7 @@ open class PartOfMassDbPopulator(appContext: Context, workerParams: WorkerParame
 
     override fun doWork(): Result {
         return try {
+            //TODO add check if partOfMass is empty ???
             val initialPartOfMasses: List<PartOfMass> =
                 Gson().fromJsonFile<List<PartOfMass>>(applicationContext, R.raw.part_of_masses)
             partOfMassDao.insertAll(initialPartOfMasses)

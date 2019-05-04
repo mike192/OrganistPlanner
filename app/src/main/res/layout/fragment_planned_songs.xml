@@ -15,7 +15,7 @@
 
         <!-- TODO to replace after implementing appropriate recyclerview-->
         <TextView
-            android:id="@+id/testPlannedSongs"
+            android:id="@+id/emptySongsTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="16dp"

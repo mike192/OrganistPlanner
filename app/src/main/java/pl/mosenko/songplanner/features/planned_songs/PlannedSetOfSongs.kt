@@ -17,4 +17,8 @@ class PlannedSetOfSongs {
         entity = Row::class
     )
     var rowList: List<Row> = ArrayList()
+
+    override fun toString(): String =
+        setOfSongs.toString() + " " + rowList.toString() + "\n"
+
 }
